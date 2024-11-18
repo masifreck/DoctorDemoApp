@@ -1,4 +1,4 @@
-export const primarycolor = '#2663FF'
+export const primarycolor = '#1FAB89'
 
 
 import { Dimensions } from "react-native"

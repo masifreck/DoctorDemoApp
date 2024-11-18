@@ -1,94 +1,103 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { primarycolor, screenWidth } from './utils';
-import { screenHeight } from './utils';
-const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-  const handleLogin = () => {
-    // Authentication logic here
-    navigation.replace('usertabs');
-    console.log('Login button pressed');
-  };
+const LoginScreen = () => {
+  const navigation = useNavigation();
 
   return (
-    <ImageBackground
-      source={require('./../assests/bglog.jpg')} // Replace with your image path
-      style={styles.background}
-    >
-        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-            <Image style={{width:50,height:60,marginBottom:-10}} source={require('../assests/hj.png')}/>
-<Text style={[styles.text1,{fontWeight:'bold'}]}>Doccu</Text>
-        </View>
-        <View style={{alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
-            <Image style={{width:screenWidth*0.75,height:screenHeight*0.35}} source={require('../assests/drlogo.png')}/>
-            <Text style={styles.text1}> <Text style={{fontWeight:'bold'}}>Healthy</Text> gets easier. </Text>
-            <Text style={styles.text1}>Now on your hand ✋ </Text>
-        </View>
-    
-        <View style={{flexDirection:'row',justifyContent:'space-evenly', gap:20}}>
-        <TouchableOpacity onPress={handleLogin} style={[styles.button,{backgroundColor:'#8394A840'}]}>
-          <Text style={[styles.buttonText,{color:'#737D8F',fontWeight:'normal'}]}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>GET STARTED</Text>
-        </TouchableOpacity>
-        </View>
-     
-    </ImageBackground>
+    <View style={styles.container}>
+      {/* Logo/Heart with Cross */}
+      <View style={styles.logoContainer}>
+      <Image
+          style={styles.logo}
+          source={require('../assests/Login.jpeg')}
+        />
+      </View>
+
+      {/* App Name */}
+      <Text style={styles.appName}>Heal In India</Text>
+
+      {/* Subtitle */}
+      <Text style={styles.subtitle}>Let’s get started!</Text>
+      <Text style={styles.description}>Login to stay healthy and fit</Text>
+
+      {/* Login Button */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => navigation.navigate('Logind')}
+      >
+        <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+
+      {/* Sign Up Button */}
+      <TouchableOpacity
+        style={styles.signUpButton}
+        onPress={() => navigation.navigate('SignUpScreen')}
+      >
+        <Text style={styles.signUpButtonText}>Sign Up</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-export default LoginScreen;
-
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: 'space-between',
-    flexDirection:'column',
-    padding:30
-    
-  },
   container: {
-    //backgroundColor: 'rgba(0,0,0,0.5)', // Add semi-transparent overlay for better text visibility
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    marginHorizontal: 20,
-    borderRadius: 10,
-  },
-  title: {
-    fontSize: 28,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'white',
-  },
-  input: {
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    color: 'white',
-  },
-  button: {
-    width:'50%',
-    height:50,
-    backgroundColor: primarycolor,
-    padding: 10,
-    borderRadius: 17,
+    flex: 1,
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 10,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight:'bold'
+  logoContainer: {
+    marginBottom: 5,
   },
-  text1: {
-    fontFamily: 'Arial', // No hyphen, just the font name
-    fontSize:24,
-    color:'#38435E'
-},
-
+  logo: {
+    height: 200,
+    width: 200,
+    borderRadius: 17,
+  },
+  appName: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#00BFA6',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#4F4F4F',
+    marginBottom: 5,
+  },
+  description: {
+    fontSize: 13,
+    color: '#A9A9A9',
+    marginBottom: 30,
+  },
+  loginButton: {
+    backgroundColor: '#00BFA6',
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 80,
+    marginBottom: 15,
+  },
+  loginButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  signUpButton: {
+    borderColor: '#00BFA6',
+    borderWidth: 1,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 80,
+  },
+  signUpButtonText: {
+    color: '#00BFA6',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
+
+export default LoginScreen;
