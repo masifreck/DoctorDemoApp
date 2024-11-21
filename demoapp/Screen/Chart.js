@@ -3,8 +3,31 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import {GiftedChat} from 'react-native-gifted-chat'
 
 const HeartRateChart = () => {
+  const [messages, setMessages] = useState([]);
+
+  React.useEffect(() => {
+    setMessages([
+        {
+            _id: 1,
+            text: 'Hello developer',
+            createdAt: new Date(),
+            user: {
+                _id: 2,
+                name: 'React Native',
+                avatar: 'https://placeimg.com/140/140/any',
+            },
+        },
+    ]);
+}, []);
+
+const onSend = (newMessages = []) => {
+    setMessages((previousMessages) =>
+        GiftedChat.append(previousMessages, newMessages)
+    );
+};
   return (
     <View style={styles.cardContainer}>
       {/* Header Section */}

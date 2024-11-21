@@ -1,80 +1,85 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet , TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ScrollView, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const DoctorDetails = ({ route, navigation }) => {
-  const {hospital} = route.params;
+const HospitalDetails = ({ route , navigation }) => {
+  const { hospital } = route.params; // Pass hospital object through navigation
+
+  const { name, details, distance, rating, reviews, imageUri } = hospital;
 
   return (
     <ScrollView style={styles.container}>
+      {/* Hospital Image */}
+
+      <View style={styles.upper}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.headerLeft}>
+          <AntDesign name="arrowleft" size={25} color="#6B7280" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Hospital Details</Text>
+        <View style={styles.headerRight} />
+      </View>
+
+
+      <Image source={{ uri: imageUri }} style={styles.image} />
+
+   
+
+      {/* Hospital Name and Rating */}
       <View style={styles.header}>
-        <AntDesign name="arrowleft" size={25} color="#6B7280" onPress={() => navigation.goBack()} />
-        <Text style={styles.headerTitle}>{hospital.name}</Text>
-        <AntDesign name="hearto" size={20} color="#6B7280" />
-      </View>
-      <View style={styles.card}>
-        <Image style={styles.image} source={{ uri: hospital.imageUri }} />
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{hospital.name}</Text>
-          <Text style={styles.cardSubtitle}>Cardiologist</Text>
-          <Text style={styles.cardLocation}><Icon name="map-marker" size={14} color="#6B7280" /> {hospital.address}</Text>
-        </View>
-      </View>
-      <View style={styles.stats}>
-        <View style={styles.stat}>
-          <Icon name="users" size={30} color="#34D399" />
-          <Text style={styles.statValue}>2,000+</Text>
-          <Text style={styles.statLabel}>patients</Text>
-        </View>
-        <View style={styles.stat}>
-          <Icon name="award" size={30} color="#34D399" />
-          <Text style={styles.statValue}>10+</Text>
-          <Text style={styles.statLabel}>experience</Text>
-        </View>
-        <View style={styles.stat}>
-          <Icon name="star" size={30} color="#34D399" />
-          <Text style={styles.statValue}>{hospital.rating}</Text>
-          <Text style={styles.statLabel}>rating</Text>
-        </View>
-        <View style={styles.stat}>
-          <Icon name="comments" size={30} color="#34D399" />
-          <Text style={styles.statValue}>{hospital.reviews}</Text>
-          <Text style={styles.statLabel}>reviews</Text>
-        </View>
-      </View>
-      {/* about */}
-      <Text style={styles.sectionTitle}>About me</Text>
-      <Text style={styles.aboutText}>
-        Infrastructure and a veteran team of highly-skilled doctors providing comprehensive medical care to
-        patients from India and abroad. It offers best-in-class medical services. <Text style={styles.link}>view more</Text>
-      </Text>
-      {/* Review */}
-      <View style={styles.reviewsHeader}>
-        <Text style={styles.sectionTitle}>Reviews</Text>
-        <Text style={styles.link}>See All</Text>
+        <Text style={styles.hospitalName}>{name}</Text>
+        {/* <Text style={styles.rating}>Rating: {rating} ({reviews} reviews)</Text> */}
       </View>
 
-      <View style={styles.reviewItem}>
-        <Image
-          source={{ uri: 'https://img.freepik.com/free-photo/medium-shot-smiley-man-posing_23-2149915905.jpg?t=st=1731580714~exp=1731584314~hmac=3bd8a3068c2316321b8201d7959993e302104d90ded626aecc1e4ac451b463bd&w=360' }} // Replace with reviewer's image
-          style={styles.reviewerImage}
-        />
-        <View style={styles.reviewContent}>
-          <Text style={styles.reviewerName}>Emily Anderson</Text>
-          <View style={styles.ratingRow}>
-            <Text style={styles.ratingNumber}>5.0</Text>
-            <Icon name="star" size={16} color="#F8C21E" />
+      {/* Hospital Address */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Address:</Text>
+        <Text style={styles.text}>{details.address}</Text>
+      </View>
+
+      {/* Contact Numbers */}
+      <View style={styles.section}>
+        
+        <Text style={styles.sectionTitle}>Contact Numbers:</Text>
+        <Text style={styles.text}>
+          Landline: {details.telephone.landlines.join(', ')}
+        </Text>
+        {/* {details.telephone.landlines.map((number, index) => (
+          <Text key={index} style={styles.text}>Landline: {number} </Text>
+        ))} */}
+        {details.telephone.contacts && details.telephone.contacts.map((contact, index) => (
+          <View key={index} style={styles.contactItem}>
+            <Text style={styles.text}>Contact: {contact.name}</Text>
+            {contact.position && <Text style={styles.text}>Position: {contact.position}</Text>}
+            {contact.mobile && <Text style={styles.text}>Mobile: {contact.mobile}</Text>}
+            {contact.office && <Text style={styles.text}>Office: {contact.office}</Text>}
+            {contact.email && <Text style={styles.text}>Email: {contact.email}</Text>}
           </View>
-          <Text style={styles.reviewText}>
-            Dr. Patel is a true professional who genuinely cares about his patients. I highly recommend Dr. Patel to
-            anyone seeking exceptional cardiac care.
-          </Text>
-        </View>
+        ))}
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AllDoctor')}>
-        <Text style={styles.buttonText}>All Doctors</Text>
+      {/* Diseases Empanelled */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Treatments Offered:</Text>
+        <Text style={styles.text}>{details.diseasesEmpanelled.general}</Text>
+      </View>
+
+      {/* Remarks */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Remarks:</Text>
+        <Text style={styles.text}>{details.remark}</Text>
+      </View>
+
+      {/* Distance */}
+      {/* <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Distance:</Text>
+        <Text style={styles.text}>{distance}</Text>
+      </View> */}
+
+      {/* Button to call the hospital */}
+      <TouchableOpacity style={styles.callButton} onPress={() => navigation.navigate('AllDoctor')}>
+        <Text style={styles.callButtonText}>View All Doctors</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -83,178 +88,83 @@ const DoctorDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
-    padding: 16,
-  },
-  
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  aboutText: {
-    color: '#666',
-    marginBottom: 16,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1F2937',
-  },
-  aboutText: {
-    color: '#666',
-    marginBottom: 16,
-  },
-  link: {
-    color: '#3686ff',
-    textDecorationLine: 'underline',
-  },
-  ratingNumber: {
-    marginRight: 4,
-    color: '#333',
-  },
-  reviewsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 8,
-  },
-  reviewItem: {
-    flexDirection: 'row',
-    marginVertical: 8,
-  },
-  reviewerImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  reviewContent: {
-    flex: 1,
-  },
-  reviewerName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000'
-  },
-  ratingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 4,
-  },
-  card: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 5,
-    marginBottom: 16,
+    backgroundColor: '#f5f5f5',
   },
   image: {
-    width: 64,
-    height: 64,
-    borderRadius: 8,
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
   },
-  cardContent: {
-    marginLeft: 16,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1F2937',
-  },
-  cardSubtitle: {
-    color: '#6B7280',
-  },
-  cardLocation: {
-    color: '#6B7280',
-    marginTop: 4,
-  },
-  stats: {
+  upper: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 16,
-  },
-  stat: {
     alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1F2937',
-  },
-  statLabel: {
-    color: '#6B7280',
-  },
-  section: {
-    marginBottom: 16,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1F2937',
-    marginBottom: 8,
-  },
-  sectionContent: {
-    color: '#6B7280',
-  },
-  link: {
-    color: '#3B82F6',
-  },
-  sectionHeader: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    backgroundColor: '#F3F4F6',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
   },
-  review: {
-    flexDirection: 'row',
-    marginTop: 16,
+  headerLeft: {
+    width: 40,
+    alignItems: 'flex-start',
   },
-  reviewImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-  },
-  reviewContent: {
-    marginLeft: 16,
-  },
-  reviewAuthor: {
-    fontSize: 14,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: '600',
-    color: '#1F2937',
+    color: '#000',
+    textAlign: 'center',
+    flex: 1,
   },
-  reviewRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 4,
+  headerRight: {
+    width: 40, // Empty space for balance
   },
-  reviewRatingValue: {
-    color: '#FBBF24',
+ 
+  header: {
+    padding: 16,
+    backgroundColor: '#fff',
+    elevation: 2,
   },
-  reviewStars: {
-    flexDirection: 'row',
-    marginLeft: 8,
+  hospitalName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
-  reviewText: {
-    color: '#6B7280',
+  rating: {
+    fontSize: 16,
+    color: '#666',
     marginTop: 8,
   },
-  button: {
-    backgroundColor: '#34D399',
-    paddingVertical: 12,
+  section: {
+    padding: 16,
+    backgroundColor: '#fff',
+    marginVertical: 8,
+    elevation: 1,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+  },
+  text: {
+    fontSize: 16,
+    color: '#555',
+  },
+  contactItem: {
+    marginTop: 8,
+  },
+  callButton: {
+    backgroundColor: '#10b981',
+    padding: 15,
+    margin: 16,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 16,
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+  callButtonText: {
+    color: '#fff',
+    fontSize: 18,
   },
 });
 
-export default DoctorDetails;
+export default HospitalDetails;

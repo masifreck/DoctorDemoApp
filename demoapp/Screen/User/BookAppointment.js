@@ -8,15 +8,17 @@ import {
   ScrollView,
   Linking,
   Modal,
-  Alert
+  Alert,
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {launchImageLibrary} from 'react-native-image-picker';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
 const AppointmentScreen = ({route, navigation}) => {
   const [imageUri, setImageUri] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
+  const [allergy, setAllergy] = useState(''); // State for allergy input
   const {date, time, doctor} = route.params;
 
   const openWebsite = () => {
@@ -41,6 +43,10 @@ const AppointmentScreen = ({route, navigation}) => {
   };
 
   const handleConfirm = () => {
+    if (!allergy.trim()) {
+      Alert.alert('Allergy Information Required', 'Please enter any known allergies or "None" if applicable.');
+      return;
+    }
     setModalVisible(true); // Show modal on confirm button press
   };
 
@@ -99,6 +105,9 @@ const AppointmentScreen = ({route, navigation}) => {
         <Text style={styles.detailValue}>Card/ Cash</Text>
       </View>
 
+      {/* Allergy Input */}
+      
+
       {/* Passport and Travel Options */}
       <View style={styles.optionsContainer}>
         <Text style={styles.optionLabel}>Medical Report</Text>
@@ -115,13 +124,16 @@ const AppointmentScreen = ({route, navigation}) => {
         )}
       </View>
 
-      {/* <View style={styles.optionsContainer}>
-        <Text style={styles.optionLabel}>Travel</Text>
-        <TouchableOpacity style={styles.optionButton} onPress={openWebsite}>
-          <Text style={styles.optionButtonText}>Book Now</Text>
-          <MaterialIcons name="flight" size={18} color="#FFF" />
-        </TouchableOpacity>
-      </View> */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Any Allergies?</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter allergy details or 'None'"
+          placeholderTextColor={'#000'}
+          value={allergy}
+          onChangeText={setAllergy}
+        />
+      </View>
 
       {/* Confirm Button */}
       <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
@@ -135,42 +147,50 @@ const AppointmentScreen = ({route, navigation}) => {
             <Icon name="checkmark-circle" size={80} color="#4CAF50" />
             <Text style={styles.modalText}>Congratulations!</Text>
             <Text style={styles.modalSubtext}>
-              Your appointment with Dr. David Patel is confirmed for
+              Your appointment with {doctor.name} is confirmed.
             </Text>
-            <Text style={styles.modalSubtext}>{doctor.name}</Text>
             <Text style={styles.modalSubtext}>Date: {date}</Text>
             <Text style={styles.modalSubtext}>Time: {time}</Text>
-
+            <Text style={styles.modalSubtext}>Allergy: {allergy}</Text>
             <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => {
-                Alert.alert(
-                  'Appointment Confirmed',
-                  `See you on ${date} at ${time}!`,
-                );
-                navigation.navigate('Home');
-              }}>
-              <Text style={styles.modalButtonText}>Done</Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity
               style={styles.modalButton}
               onPress={() => {
                 setModalVisible(false);
                 navigation.navigate('Home');
               }}>
               <Text style={styles.modalButtonText}>Done</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
     </ScrollView>
   );
 };
+
+
 const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: '#FFF',
     flexGrow: 1,
+  },
+  inputContainer: {
+    marginVertical: 12,
+  },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 8,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#F9FAFB',
+    color:'#000'
   },
   header: {
     flexDirection: 'row',

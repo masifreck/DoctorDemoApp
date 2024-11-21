@@ -1,91 +1,196 @@
-import React from 'react';
-import { View, Text, TextInput, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const AllHospital = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
+
   const hospitals = [
     {
       id: 1,
-      name: "Sunrise Health Clinic",
-      address: "123 Oak Street, CA 98765",
-      distance: "2.5 km/40min",
-      type: "Hospital",
+      name: 'Sir Ganga Ram Hospital',
+      details: {
+        hospitalName: 'Sir Ganga Ram Hospital, Sir Ganga Ram Hospital Marg',
+        address: 'Old Rajinder Nagar, New Delhi-110060',
+        telephone: {
+          landlines: [
+            '25751111',
+            '25861463',
+            '42251252',
+          ],
+          contacts: [
+            {
+              name: 'Sh. Deepak Golani',
+              position: 'Senior Manager-Marketing',
+              mobile: '9810124662',
+              office: '011-42252017',
+              email: 'deepak.golani@sgrh.com',
+            },
+            {
+              name: 'Sh. Deepak Jain',
+              mobile: '9560433511',
+            },
+            {
+              name: 'Corporate Assistance Desk',
+              email: 'corporate.assistance@sgrh.com',
+            },
+            {
+              name: 'Sh. Pawan Kumar Gautam',
+              position: 'Executive Finance',
+              extension: '011-42251689',
+              email: 'pawan.gautam@sgrh.com',
+            },
+          ],
+        },
+        diseasesEmpanelled: {
+          general:
+            'The hospital has already been empanelled for Cardiology. Now empanelment/direct billing is extended for Orthopedics including joint replacements & Gastroenterology including liver transplant.',
+        },
+        remark:
+          '10% discount on total bill excluding Drugs, Disposables and Implants.',
+      },
+      distance: '2.5 km/40min',
+      type: 'Hospital',
       rating: 5.0,
       reviews: 128,
-      imageUri: "https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      imageUri:
+        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
     {
       id: 2,
-      name: "Golden Cardiology Center",
-      address: "555 Bridge Street, Golden Gate",
-      distance: "2.5 km/40min",
-      type: "Clinic",
+      name: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+      details: {
+        hospitalName: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+        address: 'Lajpat Nagar-III, New Delhi-110024',
+        telephone: {
+          landlines: ['25751111', '25861463', '42251252'],
+        },
+        diseasesEmpanelled: {
+          general: 'General treatment and Ayurvedic research.',
+        },
+        remark: 'Specialized in Ayurvedic treatments and research.',
+      },
+      distance: '2.5 km/40min',
+      type: 'Clinic',
       rating: 4.9,
       reviews: 58,
-      imageUri: "https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      imageUri:
+        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
     {
-        id: 3,
-        name: "Golden Cardiology Center",
-        address: "555 Bridge Street, Golden Gate",
-        distance: "2.5 km/40min",
-        type: "Clinic",
-        rating: 4.9,
-        reviews: 58,
-        imageUri: "https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      }
+      id: 3,
+      name: 'Batra Hospital & Medical Research Centre',
+      details: {
+        hospitalName: 'Batra Hospital & Medical Research Centre',
+        address: 'Tughlakabad Instl. Area, Mehrauli-Badarpur Road New Delhi-110062',
+        telephone: {
+          landlines: ['25751111', '25861463', '42251252'],
+        },
+        diseasesEmpanelled: {
+          general: 'Advanced medical research and treatment across multiple disciplines.',
+        },
+        remark: 'Focus on research-based treatments.',
+      },
+      distance: '2.5 km/40min',
+      type: 'Clinic',
+      rating: 4.9,
+      reviews: 58,
+      imageUri:
+        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
   ];
+
+  // Filter hospitals based on the search query
+  const filteredHospitals = hospitals.filter(
+    (hospital) =>
+      hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      hospital.details.address.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Function to handle dialing
+  const dialPhone = (number) => {
+    Linking.openURL(`tel:${number}`);
+  };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <AntDesign name="arrowleft" size={25} color="#6B7280"  onPress={() => navigation.goBack()}/>
+        <AntDesign
+          name="arrowleft"
+          size={25}
+          color="#6B7280"
+          onPress={() => navigation.goBack()}
+        />
         <Text style={styles.headerTitle}>All Hospitals</Text>
         <View style={{ width: 20 }}></View>
       </View>
       <View style={styles.searchContainer}>
-        <Icon name="search" size={20} color="#9CA3AF" style={styles.searchIcon} />
+        <Icon
+          name="search"
+          size={20}
+          color="#9CA3AF"
+          style={styles.searchIcon}
+        />
         <TextInput
           placeholder="Search City, Hospital, Treatment"
           style={styles.searchInput}
           placeholderTextColor={'#000'}
+          value={searchQuery}
+          onChangeText={setSearchQuery} // Update search query on text change
         />
       </View>
-      <View style={styles.resultsContainer}>
-        <Text style={styles.resultsText}>532 founds</Text>
-        <View style={styles.sortContainer}>
-          <Text style={styles.sortText}>Default</Text>
-          <Icon name="sort" size={20} color="#6B7280" />
-        </View>
+      {/* <View style={styles.resultsContainer}>
+        <Text style={styles.resultsText}>{filteredHospitals.length} found</Text>
+      </View> */}
+      {/* onPress={openModal} */}
+      <View style={styles.resultContainer}>
+        <Text style={styles.resultText}> founds</Text>
+        <TouchableOpacity > 
+          <Text style={styles.sortText}>
+            Default <MaterialIcons name="sort" size={16} color="gray" />
+          </Text>
+        </TouchableOpacity>
       </View>
-      {hospitals.map(hospital => (
+
+      {filteredHospitals.map((hospital) => (
         <TouchableOpacity
           key={hospital.id}
-          onPress={() => navigation.navigate('DoctorDetails', {hospital})}
-       
+          onPress={() => navigation.navigate('DoctorDetails', { hospital })}
         >
           <View style={styles.card}>
-            <Image source={{ uri: hospital.imageUri }} style={styles.cardImage} />
+            {/* <Image source={{ uri: hospital.imageUri }} style={styles.cardImage} /> */}
             <View style={styles.cardContent}>
               <Text style={styles.cardTitle}>{hospital.name}</Text>
               <Text style={styles.cardAddress}>
-                <Icon name="map-marker" size={16} color="#ff7e75" /> {hospital.address}
+                <Icon name="map-marker" size={18} color="#ff7e75" />{' '}
+                {hospital.details.address}
               </Text>
-              <View style={styles.cardRating}>
-                <Text style={styles.cardRatingText}>
-                  <Icon name="star" size={16} color="#FBBF24" /> {hospital.rating}
-                </Text>
-                <Text style={styles.cardReviews}>({hospital.reviews} Reviews)</Text>
-              </View>
-              <View style={styles.cardDetails}>
-                <Text style={styles.cardDetailText}>
-                  <Icon name="road" size={16} color="#6B7280" /> {hospital.distance}
-                </Text>
-                <Text style={styles.cardDetailText}>
-                  <Icon name="hospital-o" size={16} color="#6B7280" /> {hospital.type}
-                </Text>
-              </View>
+
+              {/* Hospital Contact Info */}
+              <Text style={styles.detailText}>Hospital Name:</Text>
+              <Text style={styles.infoText}>{hospital.details.hospitalName}</Text>
+              {/* <Text style={styles.detailText}>Telephone:</Text>
+              <Text style={styles.phoneText}>{hospital.details.telephone.number}</Text> */}
+              {/* {hospital.details.telephone.landlines.map((number, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.phoneBadge}
+                  onPress={() => dialPhone(number)} // Make a call
+                >
+                  <Icon name="phone" size={14} color="#00A86B" />
+                  <Text style={styles.phoneText}>{number}</Text>
+                </TouchableOpacity>
+              ))} */}
             </View>
           </View>
         </TouchableOpacity>
@@ -93,7 +198,6 @@ const AllHospital = ({ navigation }) => {
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -105,50 +209,58 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 20,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 22,
+    fontWeight: 'bold',
     color: '#1F2937',
+  },
+  resultContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  resultText: {
+    color: '#6b7280',
+  },
+  sortText: {
+    color: '#6b7280',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#E5E7EB',
     borderRadius: 25,
-    paddingHorizontal: 10,
-    marginTop: 16,
+    paddingHorizontal: 15,
+    height: 50,
+    marginBottom: 16,
   },
   searchIcon: {
-    marginRight: 8,
+    marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
-    color: '#6B7280',
+    fontSize: 16,
+    color: '#374151',
   },
   resultsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 16,
+    marginBottom: 12,
   },
   resultsText: {
     color: '#6B7280',
   },
-  sortContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  sortText: {
-    color: '#6B7280',
-    marginRight: 4,
-  },
   card: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
+    borderRadius: 12,
     overflow: 'hidden',
-    marginTop: 16,
+    marginBottom: 16,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -156,57 +268,48 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: '100%',
-    height: 160,
+    height: 150,
   },
   cardContent: {
     padding: 16,
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
     color: '#1F2937',
+    marginBottom: 8,
   },
   cardAddress: {
+    fontSize: 14,
     color: '#6B7280',
-    marginTop: 4,
+    marginBottom: 10,
+    lineHeight: 20,
   },
-  cardRating: {
+  detailText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#374151',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 8,
+  },
+  phoneBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
+    backgroundColor: '#E5F9ED',
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginRight: 8,
+    marginBottom: 8,
   },
-  cardRatingText: {
-    color: '#FBBF24',
-  },
-  cardReviews: {
-    color: '#6B7280',
-    marginLeft: 8,
-  },
-  cardDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  cardDetailText: {
-    color: '#6B7280',
-    marginRight: 16,
-  },
-  cardDetailTex: {
-    color: '#3686ff',
-    marginRight: 16,
-    fontWeight: '600',  
-  },
-  ViewAll: {
-    backgroundColor: '#fff',  
-    paddingVertical: 7,      
-    paddingHorizontal: 18,
-    borderColor: '#000',
-    borderWidth: 1,  
-    borderRadius: 8,          
-    marginLeft: 20,           
-    margin: 10,
-    alignItems: 'center',    
-
+  phoneText: {
+    marginLeft: 5,
+    color: '#000',
+    fontWeight: '600',
+    fontSize: 14,
   },
 });
 

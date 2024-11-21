@@ -26,6 +26,22 @@ import Notification from './Screen/User/Notification';
 import HelpSupport from './Screen/User/HelpSupport';
 import EditProfile from './Screen/User/EditProfile';
 import ForgetPassword from './Screen/ForgetPassword';
+import DoctorDashboard from './Screen/Doctor/DoctorDashboard';
+import DoctorProfile from './Screen/Doctor/DoctorProfile';
+import DoctorEditProfile from './Screen/Doctor/DoctorEditProfile';
+import DoctorNotification from './Screen/Doctor/DoctorNotification';
+import PatintRecord from './Screen/Doctor/PatintRecord';
+import DoctorAppointmentHistory from './Screen/Doctor/DoctorAppointmentHistory';
+import Communication from './Screen/Doctor/Communication';
+import DoctorMessage from './Screen/Doctor/DoctorMessage';
+import AdminDashboard from './Screen/Admin/AdminDashboard';
+import TotalUser from './Screen/Admin/TotalUser';
+import TotalDoctor from './Screen/Admin/TotalDoctor';
+import Adminuserdetails from './Screen/Admin/Adminuserdetails';
+import Admindoctor from './Screen/Admin/Admindoctor';
+import AdminProfile from './Screen/Admin/AdminProfile';
+import AllReport from './Screen/Admin/AllReport';
+import DoctorReport from './Screen/User/DoctorReport';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +105,112 @@ function UserTabs() {
         options={{headerShown: false}}
       />
       <Tab.Screen name="Chat" component={Book} options={{headerShown: false}} />
+    </Tab.Navigator>
+  );
+}
+
+function DoctorTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+          if (route.name === 'DoctorDashboard') {
+            iconName = 'home';
+          } else if (route.name === 'DoctorAppointments') {
+            iconName = 'calendar-check';
+          } else if (route.name === 'DoctorProfile') {
+            iconName = 'user-md';
+          }
+          return (
+            <Icon name={iconName} size={focused ? 32 : 24} color={color} />
+          );
+        },
+        tabBarLabel: ({focused}) => (
+          <Text
+            style={{
+              fontSize: focused ? 12 : 10,
+              fontWeight: 'bold',
+              color: focused ? primarycolor : '#92f7c0',
+            }}>
+            {route.name}
+          </Text>
+        ),
+        tabBarStyle: {
+          backgroundColor: '#fff',
+          paddingBottom: 10,
+          height: 70,
+          borderTopWidth: 0.5,
+          borderTopColor: '#ccc',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          overflow: 'hidden',
+        },
+        tabBarActiveTintColor: primarycolor,
+        tabBarInactiveTintColor: '#92f7c0',
+      })}>
+      <Tab.Screen
+        name="DoctorDashboard"
+        component={DoctorDashboard} // Ensure this is doctor-specific
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="DoctorAppointments"
+        component={DoctorAppointmentHistory} // Replace with doctor-specific appointment screen
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="DoctorProfile"
+        component={DoctorProfile} // Replace with doctor-specific profile screen if needed
+        options={{headerShown: false}}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function AdminTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color}) => {
+          let iconName;
+          if (route.name === 'AdminDashboard') {
+            iconName = 'chart-pie';
+          } else if (route.name === 'ManageDoctors') {
+            iconName = 'user-md';
+          } else if (route.name === 'ManageAppointments') {
+            iconName = 'calendar-alt';
+          }
+          return (
+            <Icon name={iconName} size={focused ? 32 : 24} color={color} />
+          );
+        },
+        tabBarActiveTintColor: primarycolor,
+        tabBarInactiveTintColor: '#92f7c0',
+        tabBarStyle: {
+          backgroundColor: '#fff',
+          height: 70,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          overflow: 'hidden',
+        },
+      })}>
+      <Tab.Screen
+        name="AdminDashboard"
+        component={AdminDashboard}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="ManageDoctors"
+        component={TotalDoctor} // Replace with actual admin-specific screens
+        options={{headerShown: false}}
+      />
+
+      <Tab.Screen
+        name="ManageAppointments"
+        component={DoctorAppointmentHistory} // Replace with admin-specific screens
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 }
@@ -192,6 +314,106 @@ function App() {
         <Stack.Screen
           name="usertabs"
           component={UserTabs}
+          options={{headerShown: false}}
+        />
+
+        {/* Doctor panel */}
+        <Stack.Screen
+          name="DoctorDashboard"
+          component={DoctorDashboard}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DoctorTabs"
+          component={DoctorTabs}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DoctorEditProfile"
+          component={DoctorEditProfile}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DoctorNotification"
+          component={DoctorNotification}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="PatintRecord"
+          component={PatintRecord}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DoctorAppointmentHistory"
+          component={DoctorAppointmentHistory}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Communication"
+          component={Communication}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DoctorMessage"
+          component={DoctorMessage}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DoctorReport"
+          component={DoctorReport}
+          options={{headerShown: false}}
+        />
+
+        {/* Andmin dashboard */}
+
+        <Stack.Screen
+          name="AdminDashboard"
+          component={AdminDashboard}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="TotalUser"
+          component={TotalUser}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="TotalDoctor"
+          component={TotalDoctor}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Adminuserdetails"
+          component={Adminuserdetails}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="Admindoctor"
+          component={Admindoctor}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AdminProfile"
+          component={AdminProfile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name=" AllReport"
+          component={AllReport}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="AdminTabs"
+          component={AdminTabs}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

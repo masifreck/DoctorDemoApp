@@ -57,32 +57,39 @@ const AllDoctor = ({navigation}) => {
   ];
 
   const treatments = [
-    'Cardiology',
-    'CTVS',
-    'Neurology',
-    'Neurosurgery',
-    'Orthopedics',
-    'Pediatrics surgery',
-    'Gastroenterology',
-    'GI surgery',
-    'General surgery',
-    'Ophthalmology',
-    'Nephrology',
-    'Urology',
-    'Pulmonology',
-    'Dermatology',
-    'Oncology',
-    'Haematology',
-    'Onco surgery',
-    'Hepatology',
-    'Rheumatology',
-    'Endocrinology',
-    'Endocrine surgery',
-    'Plastic surgery',
-    'Ayurveda',
-    'Yoga',
-    'Dentistry',
+    "General Surgery",
+    "Internal Medicine",
+    "Psychiatry",
+    "Dermatology",
+    "Obstetrics and Gynecology",
+    "Urology",
+    "Nephrology",
+    "Cardiothoracic Surgery",
+    "Vascular Surgery",
+    "Cardiology",
+    "Endocrine Surgery",
+    "Endocrinology",
+    "Gastric Surgery",
+    "Gastroenterology",
+    "Hepatology",
+    "Neurosurgery",
+    "Neurology",
+    "Orthopedics",
+    "Oncosurgery",
+    "Oncology",
+    "Rheumatology",
+    "Pediatric Surgery",
+    "Plastic Surgery",
+    "Dentistry",
+    "Sports Injury",
+    "Nuclear Medicine",
+    "Medical Genetics",
+    "Hematology",
+    "Neonatology",
+    "Interventional Radiology",
+    "Maternal-Fetal Medicine"
   ];
+  
 
   const filteredDoctors =
     selectedFilter === 'All'
@@ -93,7 +100,7 @@ const AllDoctor = ({navigation}) => {
   const closeModal = () => setIsModalVisible(false);
   const selectTreatment = treatment => {
     setSelectedTreatment(treatment);
-    setSelectedFilter(treatment); // Optionally update the filter to the selected treatment
+    setSelectedFilter(treatment);
     closeModal();
   };
 
@@ -242,7 +249,7 @@ const AllDoctor = ({navigation}) => {
             key={index}
             style={styles.doctorCard}
             onPress={() => navigation.navigate('Doctor', {doctor})}>
-            <Image source={{uri: doctor.image}} style={styles.doctorImage} />
+            {/* <Image source={{uri: doctor.image}} style={styles.doctorImage} /> */}
             <View style={styles.doctorInfo}>
               <Text style={styles.doctorName}>{doctor.name}</Text>
               <Text style={styles.doctorSpecialty}>{doctor.specialty}</Text>
@@ -352,6 +359,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    marginLeft: 5,
+    marginRight: 5
   },
   doctorImage: {
     width: 64,

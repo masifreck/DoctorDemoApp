@@ -62,11 +62,11 @@ const LoginScreen = ({navigation}) => {
       switch (email) {
         case 'admin@example.com':
           Alert.alert('Login Successful', 'Welcome, Admin!');
-          navigation.navigate('AdminDashboard'); // Navigate to Admin Dashboard
+          navigation.navigate('AdminTabs'); // Navigate to Admin Dashboard
           break;
         case 'doctor@example.com':
           Alert.alert('Login Successful', 'Welcome, Doctor!');
-          navigation.navigate('DoctorDashboard'); // Navigate to Doctor Dashboard
+          navigation.navigate('DoctorTabs'); // Navigate to Doctor Dashboard
           break;
         case 'user@example.com':
           Alert.alert('Login Successful', 'Welcome, User!');
