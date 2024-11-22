@@ -122,94 +122,96 @@ const MyBookingsScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: '#f9f9f9',  // Light grey background for contrast
+    padding: 20, // Increase padding for a more spacious feel
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
+    fontSize: 28, // Larger title size
+    fontWeight: '700', // Bold title for emphasis
+    marginBottom: 20,
     textAlign: 'center',
-    color: '#000',
-    borderBottomWidth: 2, // Add bottom border
-    borderBottomColor: '#e6e6e6', // Use a green color for the border
-    paddingBottom: 8, // Add padding to space out the title and border
+    color: '#333', // Darker text for readability
+    borderBottomWidth: 3, 
+    borderBottomColor: '#28a745', // Green border for style
+    paddingBottom: 10,
   },
   tabs: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 16,
+    justifyContent: 'space-evenly',
+    marginBottom: 20,
   },
   tab: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderBottomWidth: 2,
-    borderColor: 'transparent',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    backgroundColor: '#e0e0e0',
   },
   activeTab: {
-    borderColor: '#28a745',
+    backgroundColor: '#28a745',  // Green active tab
   },
   tabText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#6c757d',
   },
   activeTabText: {
-    color: '#28a745',
+    color: '#fff',  // White text for active tab
     fontWeight: 'bold',
   },
   list: {
-    paddingBottom: 16,
+    paddingBottom: 20,
   },
   emptyText: {
     textAlign: 'center',
-    fontSize: 16,
-    color: '#6c757d',
-    marginTop: 20,
+    fontSize: 18,
+    color: '#999', // Greyed-out empty state text
+    marginTop: 40,
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
+    borderRadius: 15,
+    marginBottom: 20,
+    padding: 20,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-    margin: 6,
-    borderColor: '#d4e6ff',
-    borderWidth: 1,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 8,
+    elevation: 4,  // Subtle shadow for a floating effect
+    borderWidth: 0.5,
+    borderColor: '#e0e0e0',
   },
   cardHeader: {
-    marginBottom: 8,
+    marginBottom: 12,
   },
   date: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#343a40',
+    color: '#777',
   },
   cardBody: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 16,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 60,
+    height: 60,
+    borderRadius: 30,  // Round image
     marginRight: 16,
+    borderWidth: 2,
+    borderColor: '#28a745',  // Border around the avatar for emphasis
   },
   details: {
     flex: 1,
   },
   name: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#343a40',
+    color: '#333',
   },
   specialty: {
     fontSize: 14,
     color: '#6c757d',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   location: {
     flexDirection: 'row',
@@ -218,33 +220,40 @@ const styles = StyleSheet.create({
   clinic: {
     fontSize: 14,
     color: '#6c757d',
-    marginLeft: 4,
+    marginLeft: 6,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 16,
+    marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: '#dee2e6',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    backgroundColor: '#f44336', // Red background for cancel
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    width: '45%',
   },
   cancelText: {
-    color: '#495057',
+    color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   rescheduleButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    backgroundColor: '#28a745',  // Green background for reschedule
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    width: '45%',
   },
   rescheduleText: {
     color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
+
 
 export default MyBookingsScreen;

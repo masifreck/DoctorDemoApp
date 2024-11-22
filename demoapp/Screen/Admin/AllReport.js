@@ -3,6 +3,7 @@ import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity } from 
 import { PieChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -35,21 +36,11 @@ export default function ReportScreen({navigation}) {
         <TouchableOpacity  onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>Report</Text>
-        <TouchableOpacity style={styles.newBadge}>
-          <Text style={styles.newBadgeText}>1 New</Text>
-        </TouchableOpacity>
+        <Text style={styles.title}> Admin Report</Text>
       </View>
-
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Icon name="search" size={20} color="#7F7F7F" />
-        <TextInput placeholder="Search Report ..." style={styles.searchInput} />
-      </View>
-
       {/* Chart Section */}
       <View style={styles.chartSection}>
-        <Text style={styles.chartTitle}>Appointment Bookings</Text>
+        <Text style={styles.chartTitle}> All Bookings</Text>
         <View style={styles.chartContainer}>
           <PieChart
             data={data1}
@@ -64,7 +55,7 @@ export default function ReportScreen({navigation}) {
           />
           <View style={styles.actions}>
             <TouchableOpacity>
-              <Icon name="refresh" size={24} color="#6A5ACD" />
+              <MaterialIcons name="export" size={24} color="#6A5ACD" />
             </TouchableOpacity>
             <TouchableOpacity>
               <Icon name="filter-list" size={24} color="#6A5ACD" />
@@ -87,7 +78,7 @@ export default function ReportScreen({navigation}) {
           />
           <View style={styles.actions}>
             <TouchableOpacity>
-              <Icon name="refresh" size={24} color="#6A5ACD" />
+              <MaterialIcons name="export" size={24} color="#6A5ACD" />
             </TouchableOpacity>
             <TouchableOpacity>
               <Icon name="filter-list" size={24} color="#6A5ACD" />

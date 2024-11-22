@@ -1,144 +1,337 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Modal,
+  StyleSheet,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const TotalDoctor = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState(null);
+  const [form, setForm] = useState({
+    name: '',
+    degree: '',
+    experience: '',
+    fellowship: '',
+    about: '',
+    degreeImage: null,
+  });
+
+  // Mock data for doctors
+  const doctors = [
+    {
+      name: 'James Robinson',
+      degree: 'MD, Orthopedic Surgery',
+      experience: '10 years',
+      fellowship: 'Elite Ortho Clinic',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzpNgQoWK8D1zAzVMaPAS2ATw1Vv-twGXUxQ&s',
+    },
+    {
+      name: 'Sarah Johnson',
+      degree: 'MBBS, Cardiology',
+      experience: '7 years',
+      fellowship: 'HeartCare Hospital',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzpNgQoWK8D1zAzVMaPAS2ATw1Vv-twGXUxQ&s',
+    },
+  ];
+
+  // Filtered doctors list
+  const filteredDoctors = doctors.filter((doctor) => {
+    const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = filter ? doctor.degree.includes(filter) : true;
+    return matchesSearch && matchesFilter;
+  });
+
+  // Handle input changes
+  const handleInputChange = (field, value) => {
+    setForm({ ...form, [field]: value });
+  };
+
+  const handleAddDoctor = () => {
+    // Add doctor logic
+    console.log(form);
+    setModalVisible(false);
+    setForm({
+      name: '',
+      degree: '',
+      experience: '',
+      fellowship: '',
+      about: '',
+      degreeImage: null,
+    });
+  };
+
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: '#F9FAFB'}}>
-      <View style={{ padding: 16 }}>
-        {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <AntDesign name="arrowleft" size={25} color="#374151" />
-          </TouchableOpacity>
-          <Text style={{ fontSize: 20, fontWeight: '700', color: '#111827' }}>Admin All Doctors</Text>
-          <View />
-        </View>
-
-        {/* Search Bar */}
-        <View style={{ position: 'relative', marginBottom: 16 }}>
-          <TextInput
-            style={{
-              width: '100%',
-              paddingLeft: 40,
-              paddingVertical: 10,
-              borderRadius: 8,
-              backgroundColor: '#E5E7EB',
-              color: '#6B7280',
-              fontSize: 14,
-            }}
-            placeholder="Search Doctor, Name, Email..."
-            placeholderTextColor="#9CA3AF"
-          />
-          <Icon name="search" size={20} color="#9CA3AF" style={{ position: 'absolute', left: 12, top: 10 }} />
-        </View>
-
-        {/* Filter Buttons */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
-          {['All', 'Schedule', 'Active', 'New'].map((filter, index) => (
-            <TouchableOpacity
-              key={index}
-              style={{
-                backgroundColor: filter === 'All' ? '#10B981' : '#FFFFFF',
-                borderColor: '#10B981',
-                borderWidth: 1,
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 20,
-              }}
-            >
-              <Text style={{ color: filter === 'All' ? '#FFFFFF' : '#10B981', fontWeight: '500' }}>{filter}</Text>
+    <>
+      <ScrollView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
+        <View style={{ padding: 16 }}>
+          {/* Header */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <AntDesign name="arrowleft" size={25} color="#374151" />
             </TouchableOpacity>
-          ))}
-        </View>
+            <Text style={styles.headerTitle}>Admin All Doctors</Text>
+            <View />
+          </View>
 
-        {/* Doctor Cards */}
-        {Array(2)
-          .fill()
-          .map((_, index) => (
-            <View
-              key={index}
-              style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: 12,
-                padding: 16,
-                marginBottom: 16,
-                shadowColor: '#000',
-                shadowOpacity: 0.1,
-                shadowRadius: 10,
-                elevation: 2,
-              }}
-            >
-              {/* Card Header */}
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 }}>
-                <Text style={{ color: '#6B7280', fontSize: 14 }}>May 22, 2023 - 10:00 AM</Text>
-                <TouchableOpacity onPress={() => navigation.navigate(index === 0 ? 'AdminTabs' : 'Admindoctor')}>
-                  <Text style={{ color: '#3B82F6', fontSize: 14, fontWeight: '500' }}>View Details</Text>
-                </TouchableOpacity>
-              </View>
+          {/* Search Bar */}
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search by name"
+            placeholderTextColor="#9CA3AF"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
 
-              {/* Doctor Info */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {/* Filter Section */}
+          <View style={styles.filterSection}>
+            {['All', 'Orthopedic', 'Cardiology'].map((category) => (
+              <TouchableOpacity
+                key={category}
+                style={[
+                  styles.filterButton,
+                  filter === category && styles.filterButtonActive,
+                ]}
+                onPress={() => setFilter(category === 'All' ? null : category)}
+              >
+                <Text
+                  style={[
+                    styles.filterButtonText,
+                    filter === category && styles.filterButtonTextActive,
+                  ]}
+                >
+                  {category}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Doctor Cards */}
+          {filteredDoctors.map((doctor, index) => (
+            <View key={index} style={styles.card}>
+              <View style={styles.cardHeader}>
                 <Image
-                  source={{
-                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzpNgQoWK8D1zAzVMaPAS2ATw1Vv-twGXUxQ&s',
-                  }}
-                  style={{ width: 60, height: 60, borderRadius: 30, marginRight: 16 }}
+                  source={{ uri: doctor.image }}
+                  style={styles.cardImage}
                 />
-                <View>
-                  <Text style={{ fontSize: 16, fontWeight: '700', color: '#111827' }}>James Robinson</Text>
-                  <Text style={{ fontSize: 14, color: '#6B7280', marginVertical: 4 }}>Orthopedic Surgery</Text>
-                  <Text style={{ fontSize: 13, color: '#6B7280' }}>
-                    <Icon name="map-marker" size={14} color="#6B7280" /> Elite Ortho Clinic, USA
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.cardTitle}>{doctor.name}</Text>
+                  <Text style={styles.cardSubTitle}>{doctor.degree}</Text>
+                  <Text style={styles.cardDetail}>
+                    Experience: {doctor.experience}
+                  </Text>
+                  <Text style={styles.cardDetail}>
+                    Fellowship: {doctor.fellowship}
                   </Text>
                 </View>
               </View>
-
-              {/* Actions */}
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
-                {index === 0 ? (
-                  <>
-                    <TouchableOpacity
-                      style={{
-                        borderColor: '#10B981',
-                        borderWidth: 1,
-                        paddingHorizontal: 16,
-                        paddingVertical: 8,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <Text style={{ color: '#10B981', fontWeight: '500' }}>Upcoming</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: '#10B981',
-                        paddingHorizontal: 16,
-                        paddingVertical: 8,
-                        borderRadius: 20,
-                      }}
-                    >
-                      <Text style={{ color: '#FFFFFF', fontWeight: '500' }}>Reschedule</Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: '#E5E7EB',
-                      paddingHorizontal: 16,
-                      paddingVertical: 8,
-                      borderRadius: 20,
-                    }}
-                  >
-                    <Text style={{ color: '#6B7280', fontWeight: '500' }}>Canceled</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
+              <TouchableOpacity onPress={() => navigation.navigate('Admindoctor')}>
+                <Text style={styles.cardButton}>View Details</Text>
+              </TouchableOpacity>
             </View>
           ))}
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+
+      {/* Floating Action Button */}
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.fab}
+      >
+        <AntDesign name="plus" size={30} color="#FFFFFF" />
+      </TouchableOpacity>
+
+      {/* Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Add New Doctor</Text>
+            {['name', 'degree', 'experience', 'fellowship', 'about'].map((field, index) => (
+              <TextInput
+                key={index}
+                style={styles.input}
+                placeholder={`Enter ${field.charAt(0).toUpperCase() + field.slice(1)}`}
+                placeholderTextColor="#9CA3AF"
+                value={form[field]}
+                onChangeText={(value) => handleInputChange(field, value)}
+              />
+            ))}
+            <TouchableOpacity style={styles.addButton} onPress={handleAddDoctor}>
+              <Text style={styles.addButtonText}>Add Doctor</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#10B981',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 2,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  cardImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 16,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  cardSubTitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginVertical: 4,
+  },
+  cardDetail: {
+    fontSize: 13,
+    color: '#6B7280',
+  },
+  cardButton: {
+    color: '#3B82F6',
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'right',
+    marginTop: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 16,
+    color: '#111827',
+  },
+  input: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    fontSize: 14,
+    color: '#111827',
+  },
+  imagePicker: {
+    backgroundColor: '#E5E7EB',
+    borderRadius: 8,
+    padding: 12,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  imagePickerText: {
+    color: '#6B7280',
+    fontWeight: '500',
+  },
+  uploadedImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  addButton: {
+    backgroundColor: '#10B981',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '500',
+  },
+  cancelButton: {
+    marginTop: 12,
+    alignItems: 'center',
+  },
+  cancelButtonText: {
+    color: '#6B7280',
+    fontWeight: '500',
+  },
+  searchInput: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    fontSize: 14,
+    color: '#111827',
+  },
+  filterSection: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  filterButton: {
+    backgroundColor: '#E5E7EB',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 8,
+  },
+  filterButtonActive: {
+    backgroundColor: '#10B981',
+  },
+  filterButtonText: {
+    color: '#6B7280',
+  },
+  filterButtonTextActive: {
+    color: '#FFFFFF',
+  },
+});
 
 export default TotalDoctor;

@@ -3,82 +3,83 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const Doctor = ({ route , navigation}) => {
-    const { doctor } = route.params;
+const Doctor = ({ route, navigation }) => {
+  const { doctor } = route.params;
+
   return (
     <ScrollView style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
-      <AntDesign name="arrowleft" size={25} color="#6B7280" onPress={() => navigation.goBack()} />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIcon}>
+          <AntDesign name="arrowleft" size={25} color="#6B7280" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Doctor Details</Text>
-        <Icon name="heart-o" size={20} color="#6b7280" />
+        <Icon name="heart-o" size={22} color="#6B7280" />
       </View>
+
+      {/* Profile Card */}
       <View style={styles.card}>
         <View style={styles.profile}>
-          <Image style={styles.profileImage} source={{ uri: doctor.image }} />
+          {/* <Image style={styles.profileImage} source={{ uri: doctor.image }} /> */}
           <View style={styles.profileInfo}>
             <Text style={styles.profileName}>{doctor.name}</Text>
             <Text style={styles.profileSpecialty}>{doctor.specialty}</Text>
             <Text style={styles.profileLocation}>
-              <Icon name="map-marker" size={14} color="#6b7280" /> {doctor.location}
+              <Icon name="map-marker" size={14} color="#6B7280" /> {doctor.location}
             </Text>
           </View>
         </View>
       </View>
-      <View style={styles.stats}>
+
+      {/* Stats Section */}
+      {/* <View style={styles.stats}>
         <View style={styles.stat}>
           <View style={styles.statIcon}>
-            <Icon name="star" size={20} color="#34d399" />
+            <Icon name="star" size={20} color="#10B981" />
           </View>
-          <Text style={styles.statValue}>rating</Text>
-          <Text style={styles.statLabel}>rating</Text>
+          <Text style={styles.statValue}>{doctor.rating}</Text>
+          <Text style={styles.statLabel}>Rating</Text>
         </View>
         <View style={styles.stat}>
           <View style={styles.statIcon}>
-            <Icon name="comments" size={20} color="#34d399" />
+            <Icon name="comments" size={20} color="#10B981" />
           </View>
           <Text style={styles.statValue}>{doctor.reviews}</Text>
-          <Text style={styles.statLabel}>reviews</Text>
+          <Text style={styles.statLabel}>Reviews</Text>
         </View>
         <View style={styles.stat}>
           <View style={styles.statIcon}>
-            <Icon name="users" size={20} color="#34d399" />
+            <Icon name="users" size={20} color="#10B981" />
           </View>
-          <Text style={styles.statValue}>20+</Text>
-          <Text style={styles.statLabel}>experience</Text>
+          <Text style={styles.statValue}>{doctor.experience}+</Text>
+          <Text style={styles.statLabel}>Experience</Text>
         </View>
         <View style={styles.stat}>
           <View style={styles.statIcon}>
-            <Icon name="trophy" size={20} color="#34d399" />
+            <Icon name="trophy" size={20} color="#10B981" />
           </View>
           <Text style={styles.statValue}>10+</Text>
-          <Text style={styles.statLabel}>Award</Text>
+          <Text style={styles.statLabel}>Awards</Text>
         </View>
-      </View>
-      {/* un NUber */}
-      {/* 102046894395 */}
-      
-      {/* <View style={styles.section}>
-        <Text style={styles.sectionTitle}>About me</Text>
-        <Text style={styles.sectionContent}>
-          {doctor.name}, a skilled {doctor.specialty} at {doctor.location}. 
-        </Text>
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Book Appointment</Text>
-      </TouchableOpacity> */}
+      </View> */}
 
-      
+      {/* About Me Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>About me</Text>
+        <Text style={styles.sectionTitle}>About Me</Text>
         <Text style={styles.sectionContent}>
-          Dr. David Patel, a dedicated cardiologist, brings a wealth of experience to Golden Gate Cardiology Center in Golden Gate, CA. <Text style={styles.link}>view more</Text>
+          {doctor.name}, a skilled {doctor.specialty}, is dedicated to providing excellent care at{' '}
+          {doctor.location}. <Text style={styles.link}>View more</Text>
         </Text>
       </View>
+
+      {/* Hospital Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Hospital</Text>
         <Text style={styles.hospitalName}>Sunrise Health Clinic</Text>
-        <Text style={styles.hospitalHours}>Monday-Friday, 08.00 AM-18.00 PM</Text>
+        <Text style={styles.hospitalHours}>Monday-Friday, 08:00 AM - 06:00 PM</Text>
       </View>
+
+      {/* Reviews Section */}
       <View style={styles.section}>
         <View style={styles.reviewsHeader}>
           <Text style={styles.sectionTitle}>Reviews</Text>
@@ -94,18 +95,23 @@ const Doctor = ({ route , navigation}) => {
             <View style={styles.reviewRating}>
               <Text style={styles.reviewRatingValue}>5.0</Text>
               <View style={styles.reviewStars}>
-                <Icon name="star" size={14} color="#fbbf24" />
-                <Icon name="star" size={14} color="#fbbf24" />
-                <Icon name="star" size={14} color="#fbbf24" />
-                <Icon name="star" size={14} color="#fbbf24" />
-                <Icon name="star" size={14} color="#fbbf24" />
+                {[...Array(5)].map((_, i) => (
+                  <Icon key={i} name="star" size={14} color="#FBBF24" />
+                ))}
               </View>
             </View>
-            <Text style={styles.reviewText}>Dr. Patel is a true professional who genuinely cares...</Text>
+            <Text style={styles.reviewText}>
+              Dr. Patel is a true professional who genuinely cares...
+            </Text>
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DateTime',{doctor})}>
+
+      {/* Book Appointment Button */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('DateTime', { doctor })}
+      >
         <Text style={styles.buttonText}>Book Appointment</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -115,29 +121,30 @@ const Doctor = ({ route , navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
-    padding: 16,
+    backgroundColor: '#F9FAFB',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#FFFFFF',
+    elevation: 2,
+  },
+  headerIcon: {
+    padding: 8,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1F2937',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
-    marginTop: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 5,
+    margin: 16,
+    elevation: 3,
   },
   profile: {
     flexDirection: 'row',
@@ -146,78 +153,81 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 80,
     height: 80,
-    borderRadius: 12,
+    borderRadius: 40,
   },
   profileInfo: {
     marginLeft: 16,
   },
   profileName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1f2937',
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1F2937',
   },
   profileSpecialty: {
-    color: '#6b7280',
+    color: '#6B7280',
+    fontSize: 16,
   },
   profileLocation: {
-    color: '#6b7280',
+    color: '#6B7280',
     marginTop: 4,
   },
   stats: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 16,
+    margin: 16,
   },
   stat: {
     alignItems: 'center',
   },
   statIcon: {
-    backgroundColor: '#d1fae5',
-    padding: 8,
-    borderRadius: 50,
+    backgroundColor: '#D1FAE5',
+    padding: 10,
+    borderRadius: 30,
   },
   statValue: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1F2937',
     marginTop: 4,
   },
   statLabel: {
-    color: '#6b7280',
-    fontSize: 12,
+    color: '#6B7280',
+    fontSize: 14,
   },
   section: {
-    marginTop: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    margin: 16,
+    elevation: 3,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#1f2937',
+    fontWeight: '700',
+    color: '#1F2937',
   },
   sectionContent: {
-    color: '#6b7280',
+    color: '#6B7280',
     marginTop: 8,
   },
   link: {
-    color: '#3b82f6',
+    color: '#3B82F6',
   },
   hospitalName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1F2937',
     marginTop: 8,
   },
   hospitalHours: {
-    color: '#6b7280',
+    color: '#6B7280',
   },
   reviewsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   review: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginTop: 16,
   },
   reviewImage: {
@@ -231,7 +241,7 @@ const styles = StyleSheet.create({
   reviewName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1F2937',
   },
   reviewRating: {
     flexDirection: 'row',
@@ -241,25 +251,26 @@ const styles = StyleSheet.create({
   reviewRatingValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1F2937',
   },
   reviewStars: {
     flexDirection: 'row',
     marginLeft: 8,
   },
   reviewText: {
-    color: '#6b7280',
+    color: '#6B7280',
     marginTop: 4,
   },
   button: {
-    backgroundColor: '#34d399',
+    backgroundColor: '#10B981',
     paddingVertical: 12,
     borderRadius: 8,
+    margin: 16,
     alignItems: 'center',
-    marginTop: 16,
+    elevation: 3,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
   },

@@ -42,6 +42,11 @@ import Admindoctor from './Screen/Admin/Admindoctor';
 import AdminProfile from './Screen/Admin/AdminProfile';
 import AllReport from './Screen/Admin/AllReport';
 import DoctorReport from './Screen/User/DoctorReport';
+import MangeDoctor from './Screen/Admin/MangeDoctor';
+import AppointmentDetails from './Screen/User/AppointmentDetails';
+import AdminHospital from './Screen/Admin/AdminHospital';
+import AdminManage from './Screen/Admin/AdminManage';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -304,6 +309,11 @@ function App() {
           component={HelpSupport}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="AppointmentDetails"
+          component={AppointmentDetails}
+          options={{headerShown: false}}
+        />
 
         <Stack.Screen
           name="EditProfile"
@@ -406,8 +416,33 @@ function App() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name=" AllReport"
+          name="AllReport"
           component={AllReport}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="MangeDoctor"
+          component={MangeDoctor}
+          options={{headerShown: false}}
+        />
+
+
+        <Stack.Screen
+          name="AdminHospital"
+          component={AdminHospital}
+          options={{headerShown: false}}
+        />
+
+        {/* <Stack.Screen
+          name="AdminHospital"
+          component={AdminHospital}
+          options={{headerShown: false}}
+        /> */}
+
+        <Stack.Screen
+          name="AdminManage"
+          component={AdminManage}
           options={{headerShown: false}}
         />
 

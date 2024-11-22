@@ -4,12 +4,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const AdminDashboard = ({navigation}) => {
   const dashboardItems = [
-    {icon: 'calendar-outline', label: 'Reschedule', screen: 'RescheduleScreen'},
+    {icon: 'calendar-outline', label: 'Reschedule', screen: 'TotalDoctor'},
     {icon: 'people-outline', label: 'Total Users', screen: 'TotalUser'},
-    {icon: 'document-text-outline', label: 'Approve/reject', screen: 'ApproveRejectScreen'},
-    {icon: 'person-remove-outline', label: 'Activate/Deactivate', screen: 'ActivateDeactivateScreen'},
-    {icon: 'pie-chart-outline', label: 'Reports', screen: 'ReportsScreen'},
-    {icon: 'calendar', label: 'Appointment', screen: 'AppointmentScreen'},
+    {icon: 'document-text-outline', label: 'Approve/reject', screen: 'TotalUser'},
+    {icon: 'business', label: 'Hospital', screen: 'AdminHospital'},
+    {icon: 'pie-chart-outline', label: 'Reports', screen: 'AllReport'},
+    {icon: 'calendar', label: 'Appointment', screen: 'MangeDoctor'},
   ];
 
   return (

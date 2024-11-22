@@ -24,6 +24,7 @@ const AllDoctor = ({navigation}) => {
       location: 'Cardiology Center, USA',
       rating: 5,
       reviews: 1872,
+      Experience: '15+ years',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -33,6 +34,7 @@ const AllDoctor = ({navigation}) => {
       location: "Women's Clinic, Seattle, USA",
       rating: 4.9,
       reviews: 127,
+      Experience: '1+ years',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -42,6 +44,7 @@ const AllDoctor = ({navigation}) => {
       location: 'Maple Associates, NY, USA',
       rating: 4.7,
       reviews: 5223,
+      Experience: '11+ years',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -51,6 +54,8 @@ const AllDoctor = ({navigation}) => {
       location: 'Serenity Pediatrics Clinic',
       rating: 5,
       reviews: 405,
+      Experience: '13+ years',
+
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -253,17 +258,18 @@ const AllDoctor = ({navigation}) => {
             <View style={styles.doctorInfo}>
               <Text style={styles.doctorName}>{doctor.name}</Text>
               <Text style={styles.doctorSpecialty}>{doctor.specialty}</Text>
+              <Text style={styles.doctorSpecialty}>{doctor.Experience}</Text>
               <Text style={styles.doctorLocation}>
-                <MaterialIcons name="location-on" size={16} color="gray" />{' '}
+                <MaterialIcons name="location-on" size={16} color="red" />{' '}
                 {doctor.location}
               </Text>
-              <View style={styles.ratingContainer}>
+              {/* <View style={styles.ratingContainer}>
                 <Icon name="star" size={16} color="gold" />
                 <Text style={styles.ratingText}>{doctor.rating}</Text>
                 <Text style={styles.reviewText}>
                   ({doctor.reviews} Reviews)
                 </Text>
-              </View>
+              </View> */}
             </View>
           </TouchableOpacity>
         ))}
@@ -275,165 +281,171 @@ const AllDoctor = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
-    padding: 16,
+    backgroundColor: '#ffffff', // White background for a clean design
+    paddingHorizontal: 16,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingVertical: 12,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#1f2937',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1E293B', // Darker shade for better contrast
   },
   searchContainer: {
-    marginTop: 16,
+    marginVertical: 12,
     position: 'relative',
-  },
-  searchIcon: {
-    position: 'absolute',
-    left: 15,
-    top: 15,
   },
   searchInput: {
     width: '100%',
     paddingLeft: 40,
     paddingRight: 16,
     paddingVertical: 12,
-    borderRadius: 24,
-    backgroundColor: '#e5e7eb',
-    color: '#6b7280',
+    borderRadius: 12,
+    backgroundColor: '#F1F5F9', // Light gray for input background
+    fontSize: 14,
+    color: '#334155', // Text color
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    elevation: 2, // For Android shadow
+  },
+  searchIcon: {
+    position: 'absolute',
+    left: 12,
+    top: 12,
   },
   filterContainer: {
     flexDirection: 'row',
-    marginTop: 16,
     justifyContent: 'space-between',
+    marginVertical: 16,
+  },
+  filterButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#10b981',
+    backgroundColor: '#ffffff', // White background for inactive buttons
   },
   filterButtonActive: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 24,
-    backgroundColor: '#10b981',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: '#10b981', // Green for active state
   },
   filterButtonText: {
+    fontSize: 14,
     color: '#10b981',
   },
   filterButtonTextActive: {
+    fontSize: 14,
     color: '#ffffff',
-  },
-  filterButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#10b981',
   },
   resultContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 16,
+    marginVertical: 8,
   },
   resultText: {
-    color: '#6b7280',
+    fontSize: 14,
+    color: '#64748B',
   },
   sortText: {
-    color: '#6b7280',
+    fontSize: 14,
+    color: '#10b981',
     flexDirection: 'row',
     alignItems: 'center',
   },
   doctorList: {
     marginTop: 16,
+   
   },
   doctorCard: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#ffffff',
     padding: 16,
-    borderRadius: 16,
-    marginBottom: 16,
+    borderRadius: 12,
+    marginBottom: 12,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 3,
     marginLeft: 5,
     marginRight: 5
   },
   doctorImage: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginRight: 16,
+    backgroundColor: '#F3F4F6',
   },
   doctorInfo: {
     flex: 1,
-    marginLeft: 16,
   },
   doctorName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#1E293B',
   },
   doctorSpecialty: {
-    color: '#6b7280',
+    fontSize: 14,
+    color: '#64748B',
     marginTop: 4,
   },
   doctorLocation: {
-    color: '#9ca3af',
-    marginTop: 4,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 4,
-  },
-  ratingText: {
-    color: '#10b981',
-    marginLeft: 4,
-  },
-  reviewText: {
-    color: '#9ca3af',
-    marginLeft: 4,
+    fontSize: 13,
+    color: '#94A3B8',
+    marginTop: 8,
   },
   modalBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Slightly darker backdrop
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalContainer: {
     backgroundColor: 'white',
+    borderRadius: 16,
     padding: 20,
-    borderRadius: 10,
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    maxHeight: '80%',
   },
   modalHeader: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '700',
     marginBottom: 16,
-    color: '#000',
+    color: '#1E293B',
   },
   modalItem: {
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#E5E7EB',
   },
   modalItemText: {
     fontSize: 16,
-    color: '#1f2937',
+    color: '#1E293B',
   },
   modalCloseButton: {
-    padding: 10,
+    marginTop: 20,
     backgroundColor: '#10b981',
-    borderRadius: 8,
-    marginTop: 16,
+    borderRadius: 12,
+    paddingVertical: 10,
+    alignItems: 'center',
   },
   modalCloseText: {
-    color: 'white',
-    textAlign: 'center',
+    color: '#ffffff',
     fontSize: 16,
   },
 });
+
 
 export default AllDoctor;

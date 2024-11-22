@@ -19,7 +19,7 @@ const App = ({navigation}) => {
         }}
         style={styles.backgroundImage}
       />
-      <View style={styles.overlay}/>
+      <View style={styles.overlay} />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={24} color="#fff" />
@@ -58,7 +58,9 @@ const App = ({navigation}) => {
           style={styles.input}
           placeholderTextColor={'#000'}
         />
-        <Icon name="smile-o" size={24} color="#4A4A4A" />
+        <TouchableOpacity onPress={() => console.log('Message sent!')}>
+          <Icon name="paper-plane" size={24} color="#25D366" />
+        </TouchableOpacity>
       </View>
     </View>
   );

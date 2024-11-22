@@ -45,7 +45,7 @@ const AdminProfileScreen = ({navigation}) => {
         <MenuItem
           icon="bar-chart-outline"
           text="Report"
-          onPress={() => navigation.navigate(' AllReport')}
+          onPress={() => navigation.navigate('AllReport')}
         />
         <MenuItem
           icon="log-out-outline"

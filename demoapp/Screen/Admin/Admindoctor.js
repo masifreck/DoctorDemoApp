@@ -1,9 +1,48 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const Admindoctor = ({ navigation }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [doctorDetails, setDoctorDetails] = useState({
+    name: 'James Robinson',
+    degree: 'Orthopedic Surgery',
+    experience: '10 years',
+    fellowship: 'Elite Ortho Clinic, USA',
+    about: 'Specialist in orthopedic treatments.',
+    profileImage:
+      'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  });
+
+  // Handle field input changes
+  const handleInputChange = (field, value) => {
+    setDoctorDetails({ ...doctorDetails, [field]: value });
+  };
+
+  // Handle photo picker
+  const handlePhotoPicker = () => {
+    launchImageLibrary({ mediaType: 'photo', quality: 1 }, (response) => {
+      if (response.assets && response.assets.length > 0) {
+        setDoctorDetails({ ...doctorDetails, profileImage: response.assets[0].uri });
+      }
+    });
+  };
+
+  // Save changes and exit edit mode
+  const handleSave = () => {
+    setIsEditing(false);
+    console.log('Updated Doctor Details:', doctorDetails);
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -11,52 +50,56 @@ const Admindoctor = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={25} color="#374151" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Dr. James Robinson</Text>
-        <TouchableOpacity>
-          <Text style={styles.editText}>Edit</Text>
+        <Text style={styles.headerTitle}>
+          {isEditing ? 'Edit Doctor Details' : 'Dr. James Robinson'}
+        </Text>
+        <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
+          <Text style={styles.editText}>{isEditing ? 'Cancel' : 'Edit'}</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Doctor Card */}
+      {/* Doctor Details */}
       <View style={styles.card}>
-        <Text style={styles.cardDate}>May 22, 2023 - 10:00 AM</Text>
-        <View style={styles.cardContent}>
+        {isEditing ? (
+          <TouchableOpacity style={styles.imagePicker} onPress={handlePhotoPicker}>
+            <Image
+              source={{ uri: doctorDetails.profileImage }}
+              style={styles.profileImage}
+            />
+            <Text style={styles.imagePickerText}>Change Photo</Text>
+          </TouchableOpacity>
+        ) : (
           <Image
-            source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}
+            source={{ uri: doctorDetails.profileImage }}
             style={styles.profileImage}
           />
-          <View>
-            <Text style={styles.name}>James Robinson</Text>
-            <Text style={styles.speciality}>Orthopedic Surgery</Text>
-            <View style={styles.location}>
-              <Icon name="map-marker-alt" size={12} color="#6B7280" />
-              <Text style={styles.locationText}>Elite Ortho Clinic, USA</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+        )}
 
-      {/* Details Section */}
-      <View style={styles.details}>
-        <Text style={styles.detailsHeading}>Hospital Details</Text>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Date:</Text>
-          <Text style={styles.detailValue}>25/08/22 - 08:00 AM - 06:00 PM</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Duration:</Text>
-          <Text style={styles.detailValue}>30 Minutes</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Payment:</Text>
-          <Text style={styles.detailValue}>Card / Cash</Text>
-        </View>
+        {['name', 'degree', 'experience', 'fellowship', 'about'].map((field, index) => (
+          <View key={index} style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>
+              {field.charAt(0).toUpperCase() + field.slice(1)}:
+            </Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={doctorDetails[field]}
+                onChangeText={(value) => handleInputChange(field, value)}
+                placeholder={`Enter ${field}`}
+              />
+            ) : (
+              <Text style={styles.fieldValue}>{doctorDetails[field]}</Text>
+            )}
+          </View>
+        ))}
       </View>
 
       {/* Save Button */}
-      <TouchableOpacity style={styles.saveButton}>
-        <Text style={styles.saveText}>Save Changes</Text>
-      </TouchableOpacity>
+      {isEditing && (
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.saveText}>Save Changes</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -93,62 +136,43 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
   },
-  cardDate: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 12,
-  },
-  cardContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 16,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+    marginBottom: 16,
   },
-  name: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#1F2937',
-  },
-  speciality: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginVertical: 4,
-  },
-  location: {
-    flexDirection: 'row',
+  imagePicker: {
     alignItems: 'center',
+    marginBottom: 16,
   },
-  locationText: {
-    fontSize: 13,
-    color: '#6B7280',
-    marginLeft: 5,
-  },
-  details: {
-    marginBottom: 20,
-  },
-  detailsHeading: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#1F2937',
-    marginBottom: 12,
-  },
-  detailRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  detailLabel: {
+  imagePickerText: {
+    marginTop: 8,
     fontSize: 14,
-    color: '#6B7280',
+    color: '#3B82F6',
+    fontWeight: '500',
   },
-  detailValue: {
+  fieldContainer: {
+    marginBottom: 16,
+  },
+  fieldLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  fieldValue: {
     fontSize: 14,
     fontWeight: '500',
     color: '#374151',
+  },
+  input: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    color: '#111827',
   },
   saveButton: {
     backgroundColor: '#10B981',
