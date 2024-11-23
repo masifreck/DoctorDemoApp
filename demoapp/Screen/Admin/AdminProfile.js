@@ -20,7 +20,7 @@ const AdminProfileScreen = ({navigation}) => {
         <MenuItem
           icon="person-outline"
           text="Edit Profile"
-          onPress={() => navigation.navigate('DoctorEditProfile')}
+          onPress={() => navigation.navigate('AdminEditProfile')}
         />
         <MenuItem
           icon="heart-outline"

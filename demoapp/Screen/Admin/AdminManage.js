@@ -13,6 +13,9 @@ const AdminManage = ({ route, navigation }) => {
   const [treatmentOffered, setTreatmentOffered] = useState(hospital.Treatment);
   const [remark, setRemark] = useState(hospital.Remark);
 
+  // State to track edit mode
+  const [isEditable, setIsEditable] = useState(false);
+
   // Handle save action
   const handleSave = () => {
     const updatedHospital = {
@@ -29,22 +32,24 @@ const AdminManage = ({ route, navigation }) => {
 
     console.log('Updated Hospital:', updatedHospital);
     alert('Hospital details updated successfully!');
-    // You can send `updatedHospital` to a server or update it in your state.
+    setIsEditable(false); // Disable editing after saving
   };
 
   return (
     <View style={styles.container}>
       {/* Header with Back Button */}
       <View style={styles.header}>
-          <AntDesign
-            name="arrowleft"
-            size={25}
-            color="#6B7280"
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.headerTitle}>All Admin Manager</Text>
-          <View style={{ width: 20 }}></View>
-        </View>
+        <AntDesign
+          name="arrowleft"
+          size={25}
+          color="#6B7280"
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.headerTitle}>All Admin Manager</Text>
+        <TouchableOpacity onPress={() => setIsEditable(!isEditable)}>
+          <Text style={styles.editText}>{isEditable ? 'Cancel' : 'Edit'}</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Scrollable Form */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -56,6 +61,7 @@ const AdminManage = ({ route, navigation }) => {
             value={name}
             onChangeText={setName}
             placeholder="Enter hospital name"
+            editable={isEditable} // Enable or disable input based on edit mode
           />
 
           <Text style={styles.label}>Address</Text>
@@ -64,6 +70,7 @@ const AdminManage = ({ route, navigation }) => {
             value={address}
             onChangeText={setAddress}
             placeholder="Enter address"
+            editable={isEditable}
           />
 
           <Text style={styles.label}>Contact</Text>
@@ -73,6 +80,7 @@ const AdminManage = ({ route, navigation }) => {
             onChangeText={setContact}
             keyboardType="phone-pad"
             placeholder="Enter contact details"
+            editable={isEditable}
           />
 
           <Text style={styles.label}>Treatment Offered</Text>
@@ -83,6 +91,7 @@ const AdminManage = ({ route, navigation }) => {
             placeholder="Enter treatments offered"
             multiline={true}
             numberOfLines={4}
+            editable={isEditable}
           />
 
           <Text style={styles.label}>Remark</Text>
@@ -93,13 +102,16 @@ const AdminManage = ({ route, navigation }) => {
             placeholder="Enter remark"
             multiline={true}
             numberOfLines={4}
+            editable={isEditable}
           />
         </View>
 
         {/* Save Button */}
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveButtonText}>Save Changes</Text>
-        </TouchableOpacity>
+        {isEditable && (
+          <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+            <Text style={styles.saveButtonText}>Save Changes</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -125,6 +137,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: '#000',
+  },
+  editText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#3B82F6',
   },
   scrollContainer: {
     padding: 16,
@@ -178,4 +195,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

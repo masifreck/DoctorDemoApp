@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const AllDoctor = ({navigation}) => {
   const [selectedFilter, setSelectedFilter] = useState('All');
@@ -25,6 +26,8 @@ const AllDoctor = ({navigation}) => {
       rating: 5,
       reviews: 1872,
       Experience: '15+ years',
+      Followership: 'electrophysiology, care hospital Hyderabad.',
+      Degree: 'MBBS',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -34,7 +37,9 @@ const AllDoctor = ({navigation}) => {
       location: "Women's Clinic, Seattle, USA",
       rating: 4.9,
       reviews: 127,
+      Degree: 'MBBS',
       Experience: '1+ years',
+      Followership: 'electrophysiology, care hospital Hyderabad.',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -44,7 +49,9 @@ const AllDoctor = ({navigation}) => {
       location: 'Maple Associates, NY, USA',
       rating: 4.7,
       reviews: 5223,
+      Degree: 'MBBS',
       Experience: '11+ years',
+      Followership: 'electrophysiology, care hospital Hyderabad.',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
@@ -55,46 +62,46 @@ const AllDoctor = ({navigation}) => {
       rating: 5,
       reviews: 405,
       Experience: '13+ years',
-
+      Degree: 'MBBS',
+      Followership: 'electrophysiology, care hospital Hyderabad.',
       image:
         'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?t=st=1731581715~exp=1731585315~hmac=b61fe62d1452fa5aa992954421ac6ae5e10f741e24ffa95bdffdd38af203af29&w=360',
     },
   ];
 
   const treatments = [
-    "General Surgery",
-    "Internal Medicine",
-    "Psychiatry",
-    "Dermatology",
-    "Obstetrics and Gynecology",
-    "Urology",
-    "Nephrology",
-    "Cardiothoracic Surgery",
-    "Vascular Surgery",
-    "Cardiology",
-    "Endocrine Surgery",
-    "Endocrinology",
-    "Gastric Surgery",
-    "Gastroenterology",
-    "Hepatology",
-    "Neurosurgery",
-    "Neurology",
-    "Orthopedics",
-    "Oncosurgery",
-    "Oncology",
-    "Rheumatology",
-    "Pediatric Surgery",
-    "Plastic Surgery",
-    "Dentistry",
-    "Sports Injury",
-    "Nuclear Medicine",
-    "Medical Genetics",
-    "Hematology",
-    "Neonatology",
-    "Interventional Radiology",
-    "Maternal-Fetal Medicine"
+    'General Surgery',
+    'Internal Medicine',
+    'Psychiatry',
+    'Dermatology',
+    'Obstetrics and Gynecology',
+    'Urology',
+    'Nephrology',
+    'Cardiothoracic Surgery',
+    'Vascular Surgery',
+    'Cardiology',
+    'Endocrine Surgery',
+    'Endocrinology',
+    'Gastric Surgery',
+    'Gastroenterology',
+    'Hepatology',
+    'Neurosurgery',
+    'Neurology',
+    'Orthopedics',
+    'Oncosurgery',
+    'Oncology',
+    'Rheumatology',
+    'Pediatric Surgery',
+    'Plastic Surgery',
+    'Dentistry',
+    'Sports Injury',
+    'Nuclear Medicine',
+    'Medical Genetics',
+    'Hematology',
+    'Neonatology',
+    'Interventional Radiology',
+    'Maternal-Fetal Medicine',
   ];
-  
 
   const filteredDoctors =
     selectedFilter === 'All'
@@ -121,18 +128,37 @@ const AllDoctor = ({navigation}) => {
         <Text style={styles.headerTitle}>All Doctors</Text>
         <View style={{width: 24}}></View>
       </View>
+
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search doctor, Treatment..."
-          placeholderTextColor="gray"
-        />
         <Icon
           name="search"
           size={20}
           color="#9CA3AF"
           style={styles.searchIcon}
         />
+        {/* Adjusted TextInput width */}
+        <TextInput
+          placeholder="Search City, Hospital, Treatment"
+          style={styles.searchInput}
+          placeholderTextColor={'#000'}
+          // value={searchQuery}
+          // onChangeText={setSearchQuery}
+        />
+        {/* Filter button */}
+        <TouchableOpacity onPress={openModal}>
+          <View
+            style={{
+              width: 40, // Fixed width
+              height: 40, // Fixed height
+              borderRadius: 20, // Rounded button
+              backgroundColor: '#F3F4F6', // Background color
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: 10, // Space between TextInput and Filter button
+            }}>
+            <AntDesign name="filter" size={20} color="#6B7280" />
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.filterContainer}>
@@ -202,14 +228,14 @@ const AllDoctor = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.resultContainer}>
+      {/* <View style={styles.resultContainer}>
         <Text style={styles.resultText}>{filteredDoctors.length} founds</Text>
         <TouchableOpacity onPress={openModal}>
           <Text style={styles.sortText}>
             Default <MaterialIcons name="sort" size={16} color="gray" />
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Modal for selecting treatment */}
       <Modal
@@ -296,28 +322,22 @@ const styles = StyleSheet.create({
     color: '#1E293B', // Darker shade for better contrast
   },
   searchContainer: {
-    marginVertical: 12,
-    position: 'relative',
+    flexDirection: 'row', // Aligns items in a row
+    alignItems: 'center', // Vertically centers the row
+    backgroundColor: '#E5E7EB', // Background for the search box
+    borderRadius: 10, // Rounded corners
+    paddingHorizontal: 15, // Padding for inner content
+    height: 50, // Height of the search bar
+    marginBottom: 16,
   },
   searchInput: {
-    width: '100%',
-    paddingLeft: 40,
-    paddingRight: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: '#F1F5F9', // Light gray for input background
-    fontSize: 14,
-    color: '#334155', // Text color
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 3,
-    elevation: 2, // For Android shadow
+    flex: 1,
+    fontSize: 16,
+    color: '#374151',
+    marginRight: 10,
   },
   searchIcon: {
-    position: 'absolute',
-    left: 12,
-    top: 12,
+    marginRight: 10,
   },
   filterContainer: {
     flexDirection: 'row',
@@ -364,7 +384,6 @@ const styles = StyleSheet.create({
   },
   doctorList: {
     marginTop: 16,
-   
   },
   doctorCard: {
     flexDirection: 'row',
@@ -374,12 +393,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOffset: {width: 0, height: 3},
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 1,
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
   },
   doctorImage: {
     width: 80,
@@ -446,6 +464,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
 
 export default AllDoctor;

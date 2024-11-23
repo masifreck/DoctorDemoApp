@@ -46,7 +46,8 @@ import MangeDoctor from './Screen/Admin/MangeDoctor';
 import AppointmentDetails from './Screen/User/AppointmentDetails';
 import AdminHospital from './Screen/Admin/AdminHospital';
 import AdminManage from './Screen/Admin/AdminManage';
-
+import AdminEditProfile from './Screen/Admin/AdminEditProfile';
+import DoctorAppointmentHistoryDetails from './Screen/Doctor/DoctorAppointmentHistoryDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -362,6 +363,13 @@ function App() {
           component={DoctorAppointmentHistory}
           options={{headerShown: false}}
         />
+
+        <Stack.Screen
+          name="DoctorAppointmentHistoryDetails"
+          component={DoctorAppointmentHistoryDetails}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="Communication"
           component={Communication}
@@ -427,7 +435,6 @@ function App() {
           options={{headerShown: false}}
         />
 
-
         <Stack.Screen
           name="AdminHospital"
           component={AdminHospital}
@@ -443,6 +450,12 @@ function App() {
         <Stack.Screen
           name="AdminManage"
           component={AdminManage}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="AdminEditProfile"
+          component={AdminEditProfile}
           options={{headerShown: false}}
         />
 

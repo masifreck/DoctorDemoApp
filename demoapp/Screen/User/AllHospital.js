@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const AllHospital = ({ navigation }) => {
+import {Dropdown} from 'react-native-element-dropdown';
+const AllHospital = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedTreatment, setSelectedTreatment] = useState(null);
+
+  const treatments = [
+    {label: 'CTVS', value: 'CTVS'},
+    {label: 'Neurology', value: 'Neurology'},
+    {label: 'Neurosurgery', value: 'Neurosurgery'},
+    {label: 'Orthopedics', value: 'Orthopedics'},
+    {label: 'Pediatrics surgery', value: 'Pediatrics surgery'},
+    {label: 'Gastroenterology', value: 'Gastroenterology'},
+    {label: 'GI surgery', value: 'GI surgery'},
+    {label: 'General surgery', value: 'General surgery'},
+    {label: 'Ophthalmology', value: 'Ophthalmology'},
+    {label: 'Nephrology', value: 'Nephrology'},
+    {label: 'Urology', value: 'Urology'},
+  ];
 
   const hospitals = [
     {
@@ -23,11 +40,7 @@ const AllHospital = ({ navigation }) => {
         hospitalName: 'Sir Ganga Ram Hospital, Sir Ganga Ram Hospital Marg',
         address: 'Old Rajinder Nagar, New Delhi-110060',
         telephone: {
-          landlines: [
-            '25751111',
-            '25861463',
-            '42251252',
-          ],
+          landlines: ['25751111', '25861463', '42251252'],
           contacts: [
             {
               name: 'Sh. Deepak Golani',
@@ -70,7 +83,8 @@ const AllHospital = ({ navigation }) => {
       id: 2,
       name: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
       details: {
-        hospitalName: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+        hospitalName:
+          'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
         address: 'Lajpat Nagar-III, New Delhi-110024',
         telephone: {
           landlines: ['25751111', '25861463', '42251252'],
@@ -92,12 +106,14 @@ const AllHospital = ({ navigation }) => {
       name: 'Batra Hospital & Medical Research Centre',
       details: {
         hospitalName: 'Batra Hospital & Medical Research Centre',
-        address: 'Tughlakabad Instl. Area, Mehrauli-Badarpur Road New Delhi-110062',
+        address:
+          'Tughlakabad Instl. Area, Mehrauli-Badarpur Road New Delhi-110062',
         telephone: {
           landlines: ['25751111', '25861463', '42251252'],
         },
         diseasesEmpanelled: {
-          general: 'Advanced medical research and treatment across multiple disciplines.',
+          general:
+            'Advanced medical research and treatment across multiple disciplines.',
         },
         remark: 'Focus on research-based treatments.',
       },
@@ -112,13 +128,15 @@ const AllHospital = ({ navigation }) => {
 
   // Filter hospitals based on the search query
   const filteredHospitals = hospitals.filter(
-    (hospital) =>
+    hospital =>
       hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hospital.details.address.toLowerCase().includes(searchQuery.toLowerCase())
+      hospital.details.address
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()),
   );
 
   // Function to handle dialing
-  const dialPhone = (number) => {
+  const dialPhone = number => {
     Linking.openURL(`tel:${number}`);
   };
 
@@ -132,7 +150,7 @@ const AllHospital = ({ navigation }) => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.headerTitle}>All Hospitals</Text>
-        <View style={{ width: 20 }}></View>
+        <View style={{width: 20}}></View>
       </View>
       <View style={styles.searchContainer}>
         <Icon
@@ -141,32 +159,39 @@ const AllHospital = ({ navigation }) => {
           color="#9CA3AF"
           style={styles.searchIcon}
         />
+        {/* Adjusted TextInput width */}
         <TextInput
           placeholder="Search City, Hospital, Treatment"
           style={styles.searchInput}
           placeholderTextColor={'#000'}
           value={searchQuery}
-          onChangeText={setSearchQuery} // Update search query on text change
+          onChangeText={setSearchQuery}
         />
+        {/* Filter button */}
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <View
+            style={{
+              width: 40, // Fixed width
+              height: 40, // Fixed height
+              borderRadius: 20, // Rounded button
+              backgroundColor: '#F3F4F6', // Background color
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: 10, // Space between TextInput and Filter button
+            }}>
+            <AntDesign name="filter" size={20} color="#6B7280" />
+          </View>
+        </TouchableOpacity>
       </View>
+
       {/* <View style={styles.resultsContainer}>
         <Text style={styles.resultsText}>{filteredHospitals.length} found</Text>
       </View> */}
       {/* onPress={openModal} */}
-      <View style={styles.resultContainer}>
-        <Text style={styles.resultText}> founds</Text>
-        <TouchableOpacity > 
-          <Text style={styles.sortText}>
-            Default <MaterialIcons name="sort" size={16} color="gray" />
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {filteredHospitals.map((hospital) => (
+      {filteredHospitals.map(hospital => (
         <TouchableOpacity
           key={hospital.id}
-          onPress={() => navigation.navigate('DoctorDetails', { hospital })}
-        >
+          onPress={() => navigation.navigate('DoctorDetails', {hospital})}>
           <View style={styles.card}>
             {/* <Image source={{ uri: hospital.imageUri }} style={styles.cardImage} /> */}
             <View style={styles.cardContent}>
@@ -178,7 +203,9 @@ const AllHospital = ({ navigation }) => {
 
               {/* Hospital Contact Info */}
               <Text style={styles.detailText}>Hospital Name:</Text>
-              <Text style={styles.infoText}>{hospital.details.hospitalName}</Text>
+              <Text style={styles.infoText}>
+                {hospital.details.hospitalName}
+              </Text>
               {/* <Text style={styles.detailText}>Telephone:</Text>
               <Text style={styles.phoneText}>{hospital.details.telephone.number}</Text> */}
               {/* {hospital.details.telephone.landlines.map((number, index) => (
@@ -195,6 +222,56 @@ const AllHospital = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       ))}
+
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {/* Header */}
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Search Hospital</Text>
+              <AntDesign
+                name="close"
+                size={20}
+                color="#6B7280"
+                onPress={() => setModalVisible(false)}
+              />
+            </View>
+
+            {/* Dropdown */}
+            <Text style={styles.dropdownLabel}>Select Treatment</Text>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={treatments}
+              itemTextStyle={styles.itemTextStyle}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="All Treatments"
+              searchPlaceholder="Search..."
+              value={selectedTreatment}
+              onChange={item => setSelectedTreatment(item.value)}
+            />
+
+            {/* Apply Button */}
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => {
+                setModalVisible(false);
+                // Add your filter logic here
+              }}>
+              <Text style={styles.applyButtonText}>Apply</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -225,28 +302,34 @@ const styles = StyleSheet.create({
   resultText: {
     color: '#6b7280',
   },
+  itemTextStyle: {
+    color: '#000', // Black text for all items
+    fontSize: 16,
+  },
   sortText: {
     color: '#6b7280',
     flexDirection: 'row',
     alignItems: 'center',
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E5E7EB',
-    borderRadius: 25,
-    paddingHorizontal: 15,
-    height: 50,
+    flexDirection: 'row', // Aligns items in a row
+    alignItems: 'center', // Vertically centers the row
+    backgroundColor: '#E5E7EB', // Background for the search box
+    borderRadius: 10, // Rounded corners
+    paddingHorizontal: 15, // Padding for inner content
+    height: 50, // Height of the search bar
     marginBottom: 16,
-  },
-  searchIcon: {
-    marginRight: 10,
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
     color: '#374151',
+    marginRight: 10,
   },
+  searchIcon: {
+    marginRight: 10,
+  },
+
   resultsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -264,7 +347,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: {width: 0, height: 5},
   },
   cardImage: {
     width: '100%',
@@ -292,7 +375,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#000',
     marginBottom: 8,
   },
   phoneBadge: {
@@ -310,6 +393,68 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: '600',
     fontSize: 14,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: 20,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    
+  },
+  dropdownLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 8,
+  },
+  dropdown: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    height: 50,
+    marginBottom: 20,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: '#000',
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: '#000',
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    backgroundColor: '#E5E7EB',
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  applyButton: {
+    backgroundColor: '#10B981',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  applyButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

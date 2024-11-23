@@ -14,8 +14,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const AllHospital = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
-  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
+  const [searchQuery, setSearchQuery] = useState('');
+  const [modalVisible, setModalVisible] = useState(false); 
   const [newHospital, setNewHospital] = useState({
     name: '',
     location: '',

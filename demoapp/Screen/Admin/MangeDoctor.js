@@ -42,7 +42,7 @@ const DoctorManageApp = ({navigation}) => {
         <View style={{ width: 24 }} /> 
       </View>
 
-      <Text style={styles.sectionTitle}>Appointment History</Text>
+      <Text style={styles.sectionTitle}>Appointment History </Text>
 
       {/* Appointment List */}
       <ScrollView contentContainerStyle={styles.listContainer}>

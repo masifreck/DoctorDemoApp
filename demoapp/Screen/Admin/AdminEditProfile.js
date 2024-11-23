@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,14 +7,13 @@ import {
   TouchableOpacity,
   Alert,
   Image,
-  ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Dropdown} from 'react-native-element-dropdown';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { Dropdown } from 'react-native-element-dropdown';
+import { launchImageLibrary } from 'react-native-image-picker';
 
-const DoctorProfile = ({navigation}) => {
+const AdminEditProfile = ({ navigation }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [profile, setProfile] = useState({
     name: '',
@@ -23,9 +22,6 @@ const DoctorProfile = ({navigation}) => {
     specialist: null,
     experience: null,
     photo: null,
-    degree: '',
-    fellowship: '',
-    about: '',
   });
 
   const specialists = [
@@ -56,10 +52,7 @@ const DoctorProfile = ({navigation}) => {
     'Dentistry',
   ];
 
-  const experienceYears = Array.from(
-    {length: 30},
-    (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`,
-  );
+  const experienceYears = Array.from({ length: 30 }, (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`);
 
   const handleSave = () => {
     // Validation
@@ -89,7 +82,7 @@ const DoctorProfile = ({navigation}) => {
   };
 
   const handlePhotoUpload = () => {
-    launchImageLibrary({mediaType: 'photo'}, response => {
+    launchImageLibrary({ mediaType: 'photo' }, (response) => {
       if (response.didCancel) {
         return;
       }
@@ -99,20 +92,8 @@ const DoctorProfile = ({navigation}) => {
       }
       if (response.assets && response.assets.length > 0) {
         const photoUri = response.assets[0].uri;
-        setProfile({...profile, photo: photoUri});
+        setProfile({ ...profile, photo: photoUri });
         Alert.alert('Success', 'Photo uploaded successfully!');
-      }
-      if (!profile.degree) {
-        Alert.alert('Error', 'Please enter your degree.');
-        return;
-      }
-      if (!profile.fellowship) {
-        Alert.alert('Error', 'Please enter your fellowship.');
-        return;
-      }
-      if (!profile.about) {
-        Alert.alert('Error', 'Please write about yourself.');
-        return;
       }
     });
   };
@@ -121,47 +102,38 @@ const DoctorProfile = ({navigation}) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.headerLeft}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerLeft}>
           <AntDesign name="arrowleft" size={25} color="#6B7280" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Doctor Profile</Text>
+        <Text style={styles.headerTitle}>Admin  Profile</Text>
         <TouchableOpacity onPress={handleEditToggle} style={styles.headerRight}>
-          <Text style={styles.editButtonText}>
-            {isEditable ? 'Save' : 'Edit'}
-          </Text>
+          <Text style={styles.editButtonText}>{isEditable ? 'Save' : 'Edit'}</Text>
         </TouchableOpacity>
       </View>
 
       {/* Content Section */}
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         {/* Input Fields */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Enter Your Name</Text>
           <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
+            style={[styles.inputWrapper, { backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9' }]}>
             <TextInput
               style={styles.input}
               placeholder="Enter your name"
               placeholderTextColor="#000"
               editable={isEditable}
               value={profile.name}
-              onChangeText={text => setProfile({...profile, name: text})}
+              onChangeText={(text) => setProfile({ ...profile, name: text })}
             />
             {/* <Icon name="pencil" size={16} color="#4A4A4A" /> */}
           </View>
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Enter Your Age</Text>
           <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
+            style={[styles.inputWrapper, { backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9' }]}>
             <TextInput
               style={styles.input}
               placeholder="Enter your age"
@@ -169,18 +141,16 @@ const DoctorProfile = ({navigation}) => {
               keyboardType="number-pad"
               editable={isEditable}
               value={profile.age}
-              onChangeText={text => setProfile({...profile, age: text})}
+              onChangeText={(text) => setProfile({ ...profile, age: text })}
             />
             {/* <Icon name="pencil" size={16} color="#4A4A4A" /> */}
           </View>
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Enter Your Number</Text>
           <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
+            style={[styles.inputWrapper, { backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9' }]}>
             <TextInput
               style={styles.input}
               placeholder="Enter your number"
@@ -188,135 +158,75 @@ const DoctorProfile = ({navigation}) => {
               keyboardType="phone-pad"
               editable={isEditable}
               value={profile.number}
-              onChangeText={text => setProfile({...profile, number: text})}
+              onChangeText={(text) => setProfile({ ...profile, number: text })}
             />
             {/* <Icon name="pencil" size={16} color="#4A4A4A" /> */}
           </View>
         </View>
+
         {/* Dropdown: specialist */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Select Your specialist</Text>
           <Dropdown
             style={[
               styles.dropdown,
-              {
-                backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9',
-                opacity: isEditable ? 1 : 0.6,
-              },
+              { backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9', opacity: isEditable ? 1 : 0.6 },
             ]}
-            data={specialists.map(item => ({label: item, value: item}))}
-            disable={!isEditable}
+            data={specialists.map((item) => ({ label: item, value: item }))}
+            disable={!isEditable}         
             labelField="label"
             valueField="value"
             placeholder="Select specialist"
-            placeholderStyle={{color: '#000', fontSize: 16}}
-            selectedTextStyle={{color: '#000', fontSize: 16}}
-            itemTextStyle={{color: '#000', fontSize: 16}}
+            placeholderStyle={{ color: '#000', fontSize: 16 }}
+            selectedTextStyle={{ color: '#000', fontSize: 16 }}
+            itemTextStyle={{ color: '#000', fontSize: 16 }}
             value={profile.specialist}
-            onChange={item => setProfile({...profile, specialist: item.value})}
+            onChange={(item) => setProfile({ ...profile, specialist: item.value })}
           />
         </View>
+
         {/* Dropdown: Experience */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Select Years of Experience</Text>
           <Dropdown
             style={[
               styles.dropdown,
-              {
-                backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9',
-                opacity: isEditable ? 1 : 0.6,
-              },
+              { backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9', opacity: isEditable ? 1 : 0.6 },
             ]}
-            data={experienceYears.map(item => ({label: item, value: item}))}
+            data={experienceYears.map((item) => ({ label: item, value: item }))}
             disable={!isEditable}
             labelField="label"
             valueField="value"
             placeholder="Select experience"
-            placeholderStyle={{color: '#000', fontSize: 16}}
-            selectedTextStyle={{color: '#000', fontSize: 16}}
-            itemTextStyle={{color: '#000', fontSize: 16}}
+            placeholderStyle={{ color: '#000', fontSize: 16 }}
+            selectedTextStyle={{ color: '#000', fontSize: 16 }} 
+            itemTextStyle={{ color: '#000', fontSize: 16 }}
             value={profile.experience}
-            onChange={item => setProfile({...profile, experience: item.value})}
+            onChange={(item) => setProfile({ ...profile, experience: item.value })}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Enter Your Degree</Text>
-          <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your degree"
-              placeholderTextColor="#000"
-              editable={isEditable}
-              value={profile.degree}
-              onChangeText={text => setProfile({...profile, degree: text})}
-            />
-          </View>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Enter Your Fellowship</Text>
-          <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your fellowship"
-              placeholderTextColor="#000"
-              editable={isEditable}
-              value={profile.fellowship}
-              onChangeText={text => setProfile({...profile, fellowship: text})}
-            />
-          </View>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>About</Text>
-          <View
-            style={[
-              styles.inputWrapper,
-              {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-            ]}>
-            <TextInput
-              style={[styles.input, {height: 100, textAlignVertical: 'top'}]}
-              placeholder="Write about yourself"
-              placeholderTextColor="#000"
-              editable={isEditable}
-              value={profile.about}
-              onChangeText={text => setProfile({...profile, about: text})}
-              multiline
-            />
-          </View>
-        </View>
-        
+
+        {/* Photo Upload */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Upload Medical Catificated </Text>
           <TouchableOpacity
-            style={[
-              styles.uploadButton,
-              {backgroundColor: isEditable ? '#34D399' : '#D1D5DB'},
-            ]}
+            style={[styles.uploadButton, { backgroundColor: isEditable ? '#34D399' : '#D1D5DB' }]}
             onPress={isEditable ? handlePhotoUpload : null}>
             <Text style={styles.uploadButtonText}>
               {profile.photo ? 'Photo Uploaded' : 'Upload Photo'}
             </Text>
           </TouchableOpacity>
           {profile.photo && (
-            <Image source={{uri: profile.photo}} style={styles.uploadedPhoto} />
+            <Image source={{ uri: profile.photo }} style={styles.uploadedPhoto} />
           )}
         </View>
+
         {isEditable && (
           <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
         )}
-      
-      </ScrollView>
-
-
+      </View>
     </View>
   );
 };
@@ -325,8 +235,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 20,
-     
   },
   header: {
     flexDirection: 'row',
@@ -362,7 +270,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 30,
-   
   },
   inputContainer: {
     marginBottom: 20,
@@ -378,7 +285,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 8,
-    padding: 3,
+    padding: 3
+    
   },
   input: {
     flex: 1,
@@ -397,13 +305,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 40,
+    
   },
   dropdown: {
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 8,
-    padding: 10,
+    padding: 10
   },
   uploadButton: {
     paddingVertical: 12,
@@ -419,4 +327,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DoctorProfile;
+export default  AdminEditProfile;

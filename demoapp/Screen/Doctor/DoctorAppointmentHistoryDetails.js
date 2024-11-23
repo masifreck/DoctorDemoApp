@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'; // To use an icon for the back button
 
-const AppointmentDetails = ({route, navigation}) => {
+const DoctorAppointmentHistoryDetails = ({route, navigation}) => {
   // Destructure appointment data from route.params
   const {appointmentData} = route.params;
 
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentDetails;
+export default DoctorAppointmentHistoryDetails;

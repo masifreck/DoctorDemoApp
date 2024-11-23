@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const HelpSupport = ({ navigation }) => {
+const HelpSupport = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -31,7 +31,10 @@ const HelpSupport = ({ navigation }) => {
       return;
     }
     if (!number.trim() || !/^\d{10,}$/.test(number)) {
-      Alert.alert('Validation Error', 'Please enter a valid number with at least 10 digits!');
+      Alert.alert(
+        'Validation Error',
+        'Please enter a valid number with at least 10 digits!',
+      );
       return;
     }
     Alert.alert('Success', `Name: ${name}, Number: ${number}`);
@@ -41,18 +44,42 @@ const HelpSupport = ({ navigation }) => {
   };
 
   const data = [
-    { id: 1, title: 'Booking a new Appointment', description: 'Learn how to book a new appointment.' },
-    { id: 2, title: 'Existing Appointment', description: 'Manage your current appointments.' },
-    { id: 3, title: 'Online consultations', description: 'Get details about online consultations.' },
-    { id: 4, title: 'Feedbacks', description: 'Share your feedback with us.' },
-    { id: 5, title: 'Medicine orders', description: 'Order medicines online.' },
-    { id: 6, title: 'Diagnostic Tests', description: 'Book diagnostic tests easily.' },
-    { id: 7, title: 'Health plans', description: 'Explore various health plans.' },
-    { id: 8, title: 'Have a feature in mind', description: 'Suggest new features for our app.' },
-    { id: 9, title: 'Other issues', description: 'Report any other issues.' },
+    {
+      id: 1,
+      title: 'Booking a new Appointment',
+      description: 'Learn how to book a new appointment.',
+    },
+    {
+      id: 2,
+      title: 'Existing Appointment',
+      description: 'Manage your current appointments.',
+    },
+    {
+      id: 3,
+      title: 'Online consultations',
+      description: 'Get details about online consultations.',
+    },
+    {id: 4, title: 'Feedbacks', description: 'Share your feedback with us.'},
+    {id: 5, title: 'Medicine orders', description: 'Order medicines online.'},
+    {
+      id: 6,
+      title: 'Diagnostic Tests',
+      description: 'Book diagnostic tests easily.',
+    },
+    {
+      id: 7,
+      title: 'Health plans',
+      description: 'Explore various health plans.',
+    },
+    {
+      id: 8,
+      title: 'Have a feature in mind',
+      description: 'Suggest new features for our app.',
+    },
+    {id: 9, title: 'Other issues', description: 'Report any other issues.'},
   ];
 
-  const toggleExpand = (index) => {
+  const toggleExpand = index => {
     setExpandedIndex(index === expandedIndex ? null : index); // Toggle expanded state
   };
 
@@ -89,13 +116,12 @@ const HelpSupport = ({ navigation }) => {
       {/* Issues List */}
       <FlatList
         data={data}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => (
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item, index}) => (
           <View>
             <TouchableOpacity
               style={styles.listItem}
-              onPress={() => toggleExpand(index)}
-            >
+              onPress={() => toggleExpand(index)}>
               <Text style={styles.listItemText}>{item.title}</Text>
               <Icon
                 name={expandedIndex === index ? 'chevron-up' : 'chevron-down'}
@@ -118,8 +144,7 @@ const HelpSupport = ({ navigation }) => {
         animationType="slide"
         transparent
         visible={modalVisible}
-        onRequestClose={closeModal}
-      >
+        onRequestClose={closeModal}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalOverlay} />
         </TouchableWithoutFeedback>
@@ -142,13 +167,16 @@ const HelpSupport = ({ navigation }) => {
             onChangeText={setNumber}
           />
 
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitText}>Submit</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={handleSubmit}>
+              <Text style={styles.submitText}>Submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
+              <Text style={styles.cancelText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>

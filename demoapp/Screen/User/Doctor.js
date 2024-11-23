@@ -14,7 +14,7 @@ const Doctor = ({ route, navigation }) => {
           <AntDesign name="arrowleft" size={25} color="#6B7280" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Doctor Details</Text>
-        <Icon name="heart-o" size={22} color="#6B7280" />
+        <View style={{width: 24}}></View>
       </View>
 
       {/* Profile Card */}
@@ -72,11 +72,19 @@ const Doctor = ({ route, navigation }) => {
         </Text>
       </View>
 
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>About Me</Text>
+        <Text style={styles.sectionContent}>
+          {doctor.name}, a skilled {doctor.specialty}, is dedicated to providing excellent care at{' '}
+          {doctor.location}. <Text style={styles.link}>View more</Text>
+        </Text>
+      </View>
+
       {/* Hospital Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Hospital</Text>
-        <Text style={styles.hospitalName}>Sunrise Health Clinic</Text>
-        <Text style={styles.hospitalHours}>Monday-Friday, 08:00 AM - 06:00 PM</Text>
+        <Text style={styles.sectionTitle}>Followership</Text>
+        <Text style={styles.hospitalName}>{doctor.Followership}</Text>
+        <Text style={styles.hospitalHours}>{doctor.Degree}</Text>
       </View>
 
       {/* Reviews Section */}
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     color: '#1F2937',
   },
