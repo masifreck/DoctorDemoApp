@@ -36,35 +36,11 @@ const AllHospital = ({navigation}) => {
     {
       id: 1,
       name: 'Sir Ganga Ram Hospital',
+      treatments: ['CTVS', 'Orthopedics', 'Gastroenterology'],
       details: {
         hospitalName: 'Sir Ganga Ram Hospital, Sir Ganga Ram Hospital Marg',
         address: 'Old Rajinder Nagar, New Delhi-110060',
-        telephone: {
-          landlines: ['25751111', '25861463', '42251252'],
-          contacts: [
-            {
-              name: 'Sh. Deepak Golani',
-              position: 'Senior Manager-Marketing',
-              mobile: '9810124662',
-              office: '011-42252017',
-              email: 'deepak.golani@sgrh.com',
-            },
-            {
-              name: 'Sh. Deepak Jain',
-              mobile: '9560433511',
-            },
-            {
-              name: 'Corporate Assistance Desk',
-              email: 'corporate.assistance@sgrh.com',
-            },
-            {
-              name: 'Sh. Pawan Kumar Gautam',
-              position: 'Executive Finance',
-              extension: '011-42251689',
-              email: 'pawan.gautam@sgrh.com',
-            },
-          ],
-        },
+        telephone: {landlines: ['25751111', '25861463', '42251252']},
         diseasesEmpanelled: {
           general:
             'The hospital has already been empanelled for Cardiology. Now empanelment/direct billing is extended for Orthopedics including joint replacements & Gastroenterology including liver transplant.',
@@ -82,6 +58,7 @@ const AllHospital = ({navigation}) => {
     {
       id: 2,
       name: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+      treatments: ['CTVS', 'Orthopedics', 'Gastroenterology'],
       details: {
         hospitalName:
           'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
@@ -104,6 +81,7 @@ const AllHospital = ({navigation}) => {
     {
       id: 3,
       name: 'Batra Hospital & Medical Research Centre',
+      treatments: ['CTVS', 'Orthopedics', 'Gastroenterology'],
       details: {
         hospitalName: 'Batra Hospital & Medical Research Centre',
         address:
@@ -121,6 +99,7 @@ const AllHospital = ({navigation}) => {
       type: 'Clinic',
       rating: 4.9,
       reviews: 58,
+
       imageUri:
         'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
@@ -129,10 +108,11 @@ const AllHospital = ({navigation}) => {
   // Filter hospitals based on the search query
   const filteredHospitals = hospitals.filter(
     hospital =>
-      hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hospital.details.address
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()),
+      (hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        hospital.details.address
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())) &&
+      (!selectedTreatment || hospital.treatments.includes(selectedTreatment)),
   );
 
   // Function to handle dialing
@@ -230,7 +210,6 @@ const AllHospital = ({navigation}) => {
         onRequestClose={() => setModalVisible(false)}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            {/* Header */}
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Search Hospital</Text>
               <AntDesign
@@ -241,7 +220,6 @@ const AllHospital = ({navigation}) => {
               />
             </View>
 
-            {/* Dropdown */}
             <Text style={styles.dropdownLabel}>Select Treatment</Text>
             <Dropdown
               style={styles.dropdown}
@@ -260,13 +238,9 @@ const AllHospital = ({navigation}) => {
               onChange={item => setSelectedTreatment(item.value)}
             />
 
-            {/* Apply Button */}
             <TouchableOpacity
               style={styles.applyButton}
-              onPress={() => {
-                setModalVisible(false);
-                // Add your filter logic here
-              }}>
+              onPress={() => setModalVisible(false)}>
               <Text style={styles.applyButtonText}>Apply</Text>
             </TouchableOpacity>
           </View>
@@ -415,7 +389,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1F2937',
-    
   },
   dropdownLabel: {
     fontSize: 14,

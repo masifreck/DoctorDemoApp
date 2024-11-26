@@ -18,6 +18,7 @@ const AppointmentHistory = ({navigation}) => {
       appointmentDate: '25/08/22',
       time: '08:00 AM - 06:00 PM',
       duration: '30 MIN',
+      Treatment: 'Pediatrics'
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const AppointmentHistory = ({navigation}) => {
       appointmentDate: '25/08/22',
       time: '08:00 AM - 06:00 PM',
       duration: '30 MIN',
+      Treatment: 'Orthopedic Surgery'
     },
     {
       id: 3,
@@ -36,8 +38,9 @@ const AppointmentHistory = ({navigation}) => {
       appointmentDate: '28/08/22',
       time: '10:00 AM - 02:00 PM',
       duration: '45 MIN',
+      Treatment: 'Gynecologist'
     },
-    // Add more appointments here if needed
+    
   ];
   const handleSeeDetails = appointment => {
     // Navigate to the AppointmentDetails screen and pass the full appointment object
@@ -66,6 +69,9 @@ const AppointmentHistory = ({navigation}) => {
               <Text style={styles.doctorName}>{appointment.doctorName}</Text>
               <Text style={styles.hospitalName}>
                 {appointment.hospitalName}
+              </Text>
+              <Text style={styles.hospitalName}>
+                {appointment.Treatment}
               </Text>
               <Text style={styles.location}>{appointment.location}</Text>
               <Text style={styles.details}>

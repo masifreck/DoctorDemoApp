@@ -37,6 +37,10 @@ const AppointmentDetails = ({route, navigation}) => {
           <Text style={styles.boldText}>{appointmentData.hospitalName}</Text>
         </Text>
         <Text style={styles.detailText}>
+          Treatment:{' '}
+          <Text style={styles.boldText}>{appointmentData.Treatment}</Text>
+        </Text>
+        <Text style={styles.detailText}>
           Location:{' '}
           <Text style={styles.boldText}>{appointmentData.location}</Text>
         </Text>

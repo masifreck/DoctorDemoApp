@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  Modal,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Modal, StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const TotalDoctor = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,7 +17,6 @@ const TotalDoctor = ({ navigation }) => {
     degreeImage: null,
   });
 
-  // Mock data for doctors
   const doctors = [
     {
       name: 'James Robinson',
@@ -43,20 +34,17 @@ const TotalDoctor = ({ navigation }) => {
     },
   ];
 
-  // Filtered doctors list
   const filteredDoctors = doctors.filter((doctor) => {
     const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filter ? doctor.degree.includes(filter) : true;
     return matchesSearch && matchesFilter;
   });
 
-  // Handle input changes
   const handleInputChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
 
   const handleAddDoctor = () => {
-    // Add doctor logic
     console.log(form);
     setModalVisible(false);
     setForm({
@@ -71,8 +59,8 @@ const TotalDoctor = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
-        <View style={{ padding: 16 }}>
+      <ScrollView style={styles.container}>
+        <View style={styles.content}>
           {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -83,54 +71,47 @@ const TotalDoctor = ({ navigation }) => {
           </View>
 
           {/* Search Bar */}
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search by name"
-            placeholderTextColor="#9CA3AF"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
+          <View style={styles.searchContainer}>
+            <Icon name="search" size={20} color="#9CA3AF" style={styles.searchIcon} />
+            <TextInput
+              placeholder="Search City, Hospital, Treatment"
+              style={styles.searchInput}
+              placeholderTextColor="#9CA3AF"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+            <TouchableOpacity>
+              <View style={styles.filterButton}>
+                <AntDesign name="filter" size={20} color="#6B7280" />
+              </View>
+            </TouchableOpacity>
+          </View>
 
           {/* Filter Section */}
-          <View style={styles.filterSection}>
+          {/* <View style={styles.filterSection}>
             {['All', 'Orthopedic', 'Cardiology'].map((category) => (
               <TouchableOpacity
                 key={category}
-                style={[
-                  styles.filterButton,
-                  filter === category && styles.filterButtonActive,
-                ]}
+                style={[styles.filterButton, filter === category && styles.filterButtonActive]}
                 onPress={() => setFilter(category === 'All' ? null : category)}
               >
-                <Text
-                  style={[
-                    styles.filterButtonText,
-                    filter === category && styles.filterButtonTextActive,
-                  ]}
-                >
+                <Text style={[styles.filterButtonText, filter === category && styles.filterButtonTextActive]}>
                   {category}
                 </Text>
               </TouchableOpacity>
             ))}
-          </View>
+          </View> */}
 
           {/* Doctor Cards */}
           {filteredDoctors.map((doctor, index) => (
             <View key={index} style={styles.card}>
               <View style={styles.cardHeader}>
-                <Image
-                  source={{ uri: doctor.image }}
-                  style={styles.cardImage}
-                />
-                <View style={{ flex: 1 }}>
+                <Image source={{ uri: doctor.image }} style={styles.cardImage} />
+                <View style={styles.cardDetails}>
                   <Text style={styles.cardTitle}>{doctor.name}</Text>
                   <Text style={styles.cardSubTitle}>{doctor.degree}</Text>
-                  <Text style={styles.cardDetail}>
-                    Experience: {doctor.experience}
-                  </Text>
-                  <Text style={styles.cardDetail}>
-                    Fellowship: {doctor.fellowship}
-                  </Text>
+                  <Text style={styles.cardDetail}>Experience: {doctor.experience}</Text>
+                  <Text style={styles.cardDetail}>Fellowship: {doctor.fellowship}</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={() => navigation.navigate('Admindoctor')}>
@@ -142,10 +123,7 @@ const TotalDoctor = ({ navigation }) => {
       </ScrollView>
 
       {/* Floating Action Button */}
-      <TouchableOpacity
-        onPress={() => setModalVisible(true)}
-        style={styles.fab}
-      >
+      <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.fab}>
         <AntDesign name="plus" size={30} color="#FFFFFF" />
       </TouchableOpacity>
 
@@ -178,7 +156,15 @@ const TotalDoctor = ({ navigation }) => {
     </>
   );
 };
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
+  content: {
+    padding: 16,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -186,21 +172,49 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '700',
     color: '#111827',
   },
-  fab: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#10B981',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+  searchContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#E5E7EB',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    height: 50,
+    marginBottom: 16,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#374151',
+  },
+  filterButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F3F4F6',
     justifyContent: 'center',
-    elevation: 5,
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  filterSection: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  filterButtonActive: {
+    backgroundColor: '#10B981',
+  },
+  filterButtonText: {
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  filterButtonTextActive: {
+    color: '#FFFFFF',
   },
   card: {
     backgroundColor: '#FFFFFF',
@@ -223,8 +237,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginRight: 16,
   },
+  cardDetails: {
+    flex: 1,
+  },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: '#111827',
   },
@@ -243,6 +260,18 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'right',
     marginTop: 10,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#10B981',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
   },
   modalContainer: {
     flex: 1,
@@ -269,23 +298,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#111827',
   },
-  imagePicker: {
-    backgroundColor: '#E5E7EB',
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  imagePickerText: {
-    color: '#6B7280',
-    fontWeight: '500',
-  },
-  uploadedImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-    marginTop: 10,
-  },
   addButton: {
     backgroundColor: '#10B981',
     padding: 12,
@@ -295,42 +307,6 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: '#FFFFFF',
     fontWeight: '500',
-  },
-  cancelButton: {
-    marginTop: 12,
-    alignItems: 'center',
-  },
-  cancelButtonText: {
-    color: '#6B7280',
-    fontWeight: '500',
-  },
-  searchInput: {
-    backgroundColor: '#F3F4F6',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-    fontSize: 14,
-    color: '#111827',
-  },
-  filterSection: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  filterButton: {
-    backgroundColor: '#E5E7EB',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginRight: 8,
-  },
-  filterButtonActive: {
-    backgroundColor: '#10B981',
-  },
-  filterButtonText: {
-    color: '#6B7280',
-  },
-  filterButtonTextActive: {
-    color: '#FFFFFF',
   },
 });
 

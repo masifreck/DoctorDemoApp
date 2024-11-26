@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Doctor = ({ route, navigation }) => {
   const { doctor } = route.params;
-
+  const [imageError, setImageError] = useState(false);
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -64,13 +64,13 @@ const Doctor = ({ route, navigation }) => {
       </View> */}
 
       {/* About Me Section */}
-      <View style={styles.section}>
+      {/* <View style={styles.section}>
         <Text style={styles.sectionTitle}>About Me</Text>
         <Text style={styles.sectionContent}>
           {doctor.name}, a skilled {doctor.specialty}, is dedicated to providing excellent care at{' '}
           {doctor.location}. <Text style={styles.link}>View more</Text>
         </Text>
-      </View>
+      </View> */}
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About Me</Text>
@@ -96,7 +96,12 @@ const Doctor = ({ route, navigation }) => {
         <View style={styles.review}>
           <Image
             style={styles.reviewImage}
-            source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg' }}
+            source={{
+              uri : imageError
+              ? 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg'
+              : 'https://ayurvaid.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-13-at-11.39.54-AM.jpeg'
+            }}
+            onError={() => setImageError(true)}
           />
           <View style={styles.reviewContent}>
             <Text style={styles.reviewName}>Emily Anderson</Text>
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     backgroundColor: '#FFFFFF',
-    elevation: 2,
+   
   },
   headerIcon: {
     padding: 8,

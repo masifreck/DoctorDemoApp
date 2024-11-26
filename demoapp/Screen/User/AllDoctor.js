@@ -72,6 +72,7 @@ const AllDoctor = ({navigation}) => {
   const treatments = [
     'General Surgery',
     'Internal Medicine',
+    'Pediatrics',
     'Psychiatry',
     'Dermatology',
     'Obstetrics and Gynecology',
@@ -161,7 +162,7 @@ const AllDoctor = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.filterContainer}>
+      {/* <View style={styles.filterContainer}>
         <TouchableOpacity
           style={
             selectedFilter === 'All'
@@ -226,7 +227,7 @@ const AllDoctor = ({navigation}) => {
             Dentist
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* <View style={styles.resultContainer}>
         <Text style={styles.resultText}>{filteredDoctors.length} founds</Text>
@@ -284,15 +285,16 @@ const AllDoctor = ({navigation}) => {
             <View style={styles.doctorInfo}>
               <Text style={styles.doctorName}>{doctor.name}</Text>
               <Text style={styles.doctorSpecialty}>{doctor.specialty}</Text>
-              <Text style={styles.doctorSpecialty}>{doctor.Experience}</Text>
-              <Text style={styles.doctorLocation}>
-                <MaterialIcons name="location-on" size={16} color="red" />{' '}
+              <Text style={styles.doctorExperience}>{doctor.Experience}</Text>
+              {/* <Text style={styles.doctorLocation}>
+                <MaterialIcons name="location-on" size={18} color="red" />{' '}
                 {doctor.location}
-              </Text>
+              </Text> */}
               {/* <View style={styles.ratingContainer}>
                 <Icon name="star" size={16} color="gold" />
                 <Text style={styles.ratingText}>{doctor.rating}</Text>
                 <Text style={styles.reviewText}>
+                  {' '}
                   ({doctor.reviews} Reviews)
                 </Text>
               </View> */}
@@ -387,42 +389,59 @@ const styles = StyleSheet.create({
   },
   doctorCard: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
     backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+    borderRadius: 16,
+    marginVertical: 8,
+    marginHorizontal: 5,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 3},
-    shadowRadius: 4,
-    elevation: 1,
-    marginLeft: 5,
-    marginRight: 5,
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 2, // For Android shadow
+    padding: 16,
   },
   doctorImage: {
     width: 80,
     height: 80,
     borderRadius: 40,
     marginRight: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F3F4F6', // Placeholder background for image
   },
   doctorInfo: {
     flex: 1,
   },
   doctorName: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '700',
     color: '#1E293B',
+    marginBottom: 4,
   },
   doctorSpecialty: {
     fontSize: 14,
+    color: '#10b981',
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  doctorExperience: {
+    fontSize: 12,
     color: '#64748B',
-    marginTop: 4,
+    marginBottom: 4,
   },
   doctorLocation: {
-    fontSize: 13,
+    fontSize: 15,
     color: '#94A3B8',
     marginTop: 8,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: '#F59E0B', // Gold color for rating
+    marginLeft: 4,
+    fontWeight: '600',
   },
   modalBackdrop: {
     flex: 1,

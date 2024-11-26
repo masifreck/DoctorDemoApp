@@ -11,6 +11,12 @@ const patientRecords = [
     specialty: 'Gynecologist',
     clinic: "Women's Health Clinic",
     image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
+    id: 1,
+    location: 'Mumbai, India',
+    appointmentDate: '25/08/22',
+    time: '08:00 AM - 06:00 PM',
+    duration: '30 MIN',
+    Treatment: 'Pediatrics'
   },
   {
     id: '2',
@@ -19,6 +25,11 @@ const patientRecords = [
     specialty: 'Cardiologist',
     clinic: 'HeartCare Center, USA',
     image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
+    location: 'Mumbai, India',
+    appointmentDate: '25/08/22',
+    time: '08:00 AM - 06:00 PM',
+    duration: '30 MIN',
+    Treatment: 'Orthopedic Surgery'
   },
   {
     id: '3',
@@ -27,6 +38,11 @@ const patientRecords = [
     specialty: 'Cardiologist',
     clinic: 'HeartCare Center, USA',
     image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
+    location: 'Mumbai, India',
+    appointmentDate: '25/08/22',
+    time: '08:00 AM - 06:00 PM',
+    duration: '30 MIN',
+    Treatment: 'Gynecologist'
   },
 ];
 

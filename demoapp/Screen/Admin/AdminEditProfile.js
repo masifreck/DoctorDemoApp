@@ -19,40 +19,9 @@ const AdminEditProfile = ({ navigation }) => {
     name: '',
     age: '',
     number: '',
-    specialist: null,
-    experience: null,
-    photo: null,
   });
 
-  const specialists = [
-    'Cardiology',
-    'CTVS',
-    'Neurology',
-    'Neurosurgery',
-    'Orthopedics',
-    'Pediatrics surgery',
-    'Gastroenterology',
-    'GI surgery',
-    'General surgery',
-    'Ophthalmology',
-    'Nephrology',
-    'Urology',
-    'Pulmonology',
-    'Dermatology',
-    'Oncology',
-    'Haematology',
-    'Onco surgery',
-    'Hepatology',
-    'Rheumatology',
-    'Endocrinology',
-    'Endocrine surgery',
-    'Plastic surgery',
-    'Ayurveda',
-    'Yoga',
-    'Dentistry',
-  ];
 
-  const experienceYears = Array.from({ length: 30 }, (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`);
 
   const handleSave = () => {
     // Validation
@@ -81,22 +50,22 @@ const AdminEditProfile = ({ navigation }) => {
     setIsEditable(!isEditable);
   };
 
-  const handlePhotoUpload = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (response) => {
-      if (response.didCancel) {
-        return;
-      }
-      if (response.errorMessage) {
-        Alert.alert('Error', response.errorMessage);
-        return;
-      }
-      if (response.assets && response.assets.length > 0) {
-        const photoUri = response.assets[0].uri;
-        setProfile({ ...profile, photo: photoUri });
-        Alert.alert('Success', 'Photo uploaded successfully!');
-      }
-    });
-  };
+  // const handlePhotoUpload = () => {
+  //   launchImageLibrary({ mediaType: 'photo' }, (response) => {
+  //     if (response.didCancel) {
+  //       return;
+  //     }
+  //     if (response.errorMessage) {
+  //       Alert.alert('Error', response.errorMessage);
+  //       return;
+  //     }
+  //     if (response.assets && response.assets.length > 0) {
+  //       const photoUri = response.assets[0].uri;
+  //       setProfile({ ...profile, photo: photoUri });
+  //       Alert.alert('Success', 'Photo uploaded successfully!');
+  //     }
+  //   });
+  // };
 
   return (
     <View style={styles.container}>
@@ -165,7 +134,7 @@ const AdminEditProfile = ({ navigation }) => {
         </View>
 
         {/* Dropdown: specialist */}
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <Text style={styles.label}>Select Your specialist</Text>
           <Dropdown
             style={[
@@ -183,10 +152,10 @@ const AdminEditProfile = ({ navigation }) => {
             value={profile.specialist}
             onChange={(item) => setProfile({ ...profile, specialist: item.value })}
           />
-        </View>
+        </View> */}
 
         {/* Dropdown: Experience */}
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <Text style={styles.label}>Select Years of Experience</Text>
           <Dropdown
             style={[
@@ -204,10 +173,10 @@ const AdminEditProfile = ({ navigation }) => {
             value={profile.experience}
             onChange={(item) => setProfile({ ...profile, experience: item.value })}
           />
-        </View>
+        </View> */}
 
         {/* Photo Upload */}
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <Text style={styles.label}>Upload Medical Catificated </Text>
           <TouchableOpacity
             style={[styles.uploadButton, { backgroundColor: isEditable ? '#34D399' : '#D1D5DB' }]}
@@ -219,7 +188,7 @@ const AdminEditProfile = ({ navigation }) => {
           {profile.photo && (
             <Image source={{ uri: profile.photo }} style={styles.uploadedPhoto} />
           )}
-        </View>
+        </View> */}
 
         {isEditable && (
           <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
