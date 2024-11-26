@@ -1,48 +1,87 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, ImageBackground ,Image} from 'react-native';
-import { primarycolor } from './utils';
-import { screenWidth,screenHeight } from './utils';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Animated,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {screenWidth, screenHeight} from './utils';
 
-const SplashScreen = ({ navigation }) => {
+const SplashScreen = ({navigation}) => {
+  const logoOpacity = new Animated.Value(0);
+  const textOpacity = new Animated.Value(0);
+
   useEffect(() => {
-    // Wait for 3 seconds, then navigate to Login screen
+    // Animate logo and text on mount
+    Animated.sequence([
+      Animated.timing(logoOpacity, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(textOpacity, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Navigate after 3 seconds
     const timer = setTimeout(() => {
-      navigation.navigate('Login'); // Navigate to the Login screen after splash
+      navigation.navigate('Login');
     }, 3000);
 
-    // Cleanup timer when component is unmounted
-    return () => clearTimeout(timer);
-  }, [navigation]);
+    return () => clearTimeout(timer); // Cleanup timer
+  }, [navigation, logoOpacity, textOpacity]);
 
   return (
-    <ImageBackground
-    source={require('../assests/bglog.jpg')}
-    style={styles.container}>
-     <View style={{alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
-            <Image style={{width:screenWidth*0.75,height:screenHeight*0.35}} source={require('../assests/hj.png')}/>
-         
-        </View>
-    </ImageBackground>
+    <LinearGradient
+      colors={['#00BFA6', '#005F56']}
+      style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Animated.Image
+          source={require('../assests/Login.jpeg')}
+          style={[
+            styles.logo,
+            {opacity: logoOpacity, transform: [{scale: logoOpacity}]},
+          ]}
+        />
+        <Animated.Text style={[styles.appName, {opacity: textOpacity}]}>
+          Heal In India
+        </Animated.Text>
+      </View>
+    </LinearGradient>
   );
 };
 
 export default SplashScreen;
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
-  text: {
-    marginTop: 10,
-    fontSize: 18,
-    color: '#1E90FF',
+  logoContainer: {
+    alignItems: 'center',
   },
-  text1: {
-    fontFamily: 'Arial', // No hyphen, just the font name
-    fontSize:24,
-    color:'#38435E'
-},
+  logo: {
+    width: screenWidth * 0.5,
+    height: screenHeight * 0.3,
+    resizeMode: 'contain',
+    marginBottom: 20,
+  },
+  appName: {
+    fontSize: 36,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 2, // Modern spacing
+    textTransform: 'uppercase', // Gives a premium look
+    textAlign: 'center',
+  },
 });
+

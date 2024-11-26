@@ -48,6 +48,7 @@ import AdminHospital from './Screen/Admin/AdminHospital';
 import AdminManage from './Screen/Admin/AdminManage';
 import AdminEditProfile from './Screen/Admin/AdminEditProfile';
 import DoctorAppointmentHistoryDetails from './Screen/Doctor/DoctorAppointmentHistoryDetails';
+import PatintRecordDetails from './Screen/Doctor/PatintRecordDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -121,11 +122,11 @@ function DoctorTabs() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
-          if (route.name === 'DoctorDashboard') {
+          if (route.name === 'Dashboard') {
             iconName = 'home';
-          } else if (route.name === 'DoctorAppointments') {
+          } else if (route.name === 'Appointments') {
             iconName = 'calendar-check';
-          } else if (route.name === 'DoctorProfile') {
+          } else if (route.name === 'Profile') {
             iconName = 'user-md';
           }
           return (
@@ -156,17 +157,17 @@ function DoctorTabs() {
         tabBarInactiveTintColor: '#92f7c0',
       })}>
       <Tab.Screen
-        name="DoctorDashboard"
+        name="Dashboard"
         component={DoctorDashboard} // Ensure this is doctor-specific
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="DoctorAppointments"
+        name="Appointments"
         component={DoctorAppointmentHistory} // Replace with doctor-specific appointment screen
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="DoctorProfile"
+        name="Profile"
         component={DoctorProfile} // Replace with doctor-specific profile screen if needed
         options={{headerShown: false}}
       />
@@ -441,11 +442,11 @@ function App() {
           options={{headerShown: false}}
         />
 
-        {/* <Stack.Screen
-          name="AdminHospital"
-          component={AdminHospital}
+        <Stack.Screen
+          name="PatintRecordDetails"
+          component={PatintRecordDetails}
           options={{headerShown: false}}
-        /> */}
+        />
 
         <Stack.Screen
           name="AdminManage"

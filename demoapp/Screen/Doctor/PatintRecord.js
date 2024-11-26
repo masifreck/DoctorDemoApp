@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Install with npm install react-native-vector-icons
+import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const patientRecords = [
@@ -10,13 +10,12 @@ const patientRecords = [
     name: 'Sarah Johnson',
     specialty: 'Gynecologist',
     clinic: "Women's Health Clinic",
-    image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
-    id: 1,
+    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
     location: 'Mumbai, India',
     appointmentDate: '25/08/22',
     time: '08:00 AM - 06:00 PM',
     duration: '30 MIN',
-    Treatment: 'Pediatrics'
+    treatment: 'Pediatrics',
   },
   {
     id: '2',
@@ -24,31 +23,21 @@ const patientRecords = [
     name: 'Michael Chang',
     specialty: 'Cardiologist',
     clinic: 'HeartCare Center, USA',
-    image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
+    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
     location: 'Mumbai, India',
     appointmentDate: '25/08/22',
     time: '08:00 AM - 06:00 PM',
     duration: '30 MIN',
-    Treatment: 'Orthopedic Surgery'
-  },
-  {
-    id: '3',
-    status: 'On Progress',
-    name: 'Dr. Marry Yang',
-    specialty: 'Cardiologist',
-    clinic: 'HeartCare Center, USA',
-    image: 'https://media.istockphoto.com/id/1337766466/photo/man-suffering-depression-and-feeling-negative-emotions.jpg?s=2048x2048&w=is&k=20&c=rMbE_lrcWTUIiId-B1nqPsBJRfxxCbEMrbWr3wf32HQ=',
-    location: 'Mumbai, India',
-    appointmentDate: '25/08/22',
-    time: '08:00 AM - 06:00 PM',
-    duration: '30 MIN',
-    Treatment: 'Gynecologist'
+    treatment: 'Orthopedic Surgery',
   },
 ];
 
-const PatientRecordsScreen = ({navigation}) => {
+const PatientRecordsScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => navigation.navigate('PatintRecordDetails', { patient: item })}
+    >
       <View style={styles.row}>
         <Image source={{ uri: item.image }} style={styles.profileImage} />
         <View style={{ flex: 1 }}>
@@ -58,15 +47,14 @@ const PatientRecordsScreen = ({navigation}) => {
             <Icon name="map-marker" size={14} color="#6B7280" /> {item.clinic}
           </Text>
         </View>
-        <View style={item.status === 'Complete' ? styles.statusComplete : styles.statusProgress}>
+        {/* <View style={item.status === 'Complete' ? styles.statusComplete : styles.statusProgress}>
           <Text style={styles.statusText}>{item.status}</Text>
-        </View>
+        </View> */}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
-  return (   
-    
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.headerLeft} onPress={() => navigation.goBack()}>
@@ -94,7 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#fff', // Gradient-like blue
+    backgroundColor: '#fff',
     paddingVertical: 15,
     paddingHorizontal: 20,
   },
@@ -110,7 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerRight: {
-    width: 40, // Empty space for alignment
+    width: 40,
   },
   list: {
     padding: 16,

@@ -34,7 +34,7 @@ const AdminProfileScreen = ({navigation}) => {
         />
         <MenuItem
           icon="list-outline"
-          text="Medical Report"
+          text="All PatintRecord"
           onPress={() => navigation.navigate('PatintRecord')}
         />
         <MenuItem
